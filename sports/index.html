@@ -79,6 +79,9 @@
             z-index: 9999;
             pointer-events: none;
         }
+        .scanlines.hidden {
+            display: none;
+        }
 
         /* Flicker Effect */
         @keyframes crt-flicker {
@@ -1045,6 +1048,9 @@
                     <button class="sound-btn" id="sfx-toggle" title="Toggle game sound effects">
                         <span>🔊 SFX: ON</span>
                     </button>
+                    <button class="sound-btn" id="scanlines-toggle" title="Toggle CRT scanlines">
+                        <span>📺 CRT: ON</span>
+                    </button>
                     <div class="volume-container">
                         <span>VOL:</span>
                         <input type="range" class="volume-slider" id="volume-control" min="0" max="1" step="0.1" value="0.5">
@@ -1483,6 +1489,21 @@
             document.getElementById('sfx-toggle').innerHTML = sfxEnabled ? '🔊 SFX: ON' : '🔇 SFX: OFF';
             if (sfxEnabled) {
                 playCoinSound();
+            }
+        });
+
+        // Scanlines CRT Toggle
+        document.getElementById('scanlines-toggle').addEventListener('click', () => {
+            const scanlinesEl = document.querySelector('.scanlines');
+            const btnSpan = document.querySelector('#scanlines-toggle span');
+            if (scanlinesEl.classList.contains('hidden')) {
+                scanlinesEl.classList.remove('hidden');
+                btnSpan.textContent = '📺 CRT: ON';
+                playCoinSound();
+            } else {
+                scanlinesEl.classList.add('hidden');
+                btnSpan.textContent = '📺 CRT: OFF';
+                playBlipSound();
             }
         });
 
