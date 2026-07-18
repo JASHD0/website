@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dobuler.com</title>
+    <!-- Favicon (Elegant Italic "D") -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23000000'/><text x='50%' y='55%' font-family='Georgia, serif' font-style='italic' font-size='65' fill='%23ffffff' dominant-baseline='middle' text-anchor='middle'>D</text></svg>">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="How do you pronounce Dobuler? Learn the correct pronunciation of Dobuler with an interactive IPA phonetic guide and audio.">
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Design Tokens & Reset */
+        :root {
+            --bg-color: #000000;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.45);
+            --text-tertiary: rgba(255, 255, 255, 0.2);
+            --accent-color: #3b82f6; /* Modern crisp blue */
+            --accent-glow: rgba(59, 130, 246, 0.08);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Subtle Noise Overlay for premium tactile feel */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Premium dark background glow container & effect */
+        .glow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glow-effect {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
+            top: calc(50% + var(--mouse-y, 0px));
+            left: calc(50% + var(--mouse-x, 0px));
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0.8;
+            filter: blur(80px);
+            animation: pulse-glow 8s ease-in-out infinite alternate;
+            transition: top 0.4s ease-out, left 0.4s ease-out;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 0.9;
+            }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 600px;
+            margin: auto 0;
+        }
+
+        /* Top Small Text */
+        .question {
+            font-size: clamp(0.85rem, 3vw, 1.05rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(-15px);
+            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            letter-spacing: -0.01em;
+        }
+
+        /* Big Dobuler Text */
+        .brand-name {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(2.8rem, 13vw, 6.5rem);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            user-select: none;
+        }
+
+        /* Pronunciation container */
+        .pronunciation-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        .ipa-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: clamp(1.3rem, 5vw, 1.85rem);
+            font-weight: 400;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.6rem 1.25rem;
+            border-radius: 9999px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 1.25rem;
+            transition: var(--transition-smooth);
+        }
+
+        .ipa-container:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .ipa-slashes {
+            color: var(--text-secondary);
+            user-select: none;
+        }
+
+        .ipa-word {
+            display: flex;
+            align-items: center;
+        }
+
+        .ipa-syllable {
+            cursor: help;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding: 0.1rem 0.3rem;
+            border-radius: 6px;
+        }
+
+        .ipa-syllable:hover {
+            color: var(--accent-color);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .ipa-dot {
+            color: var(--text-tertiary);
+            padding: 0 0.1rem;
+            user-select: none;
+        }
+
+        /* Play audio button */
+        .play-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: var(--transition-smooth);
+            margin-left: 0.5rem;
+        }
+
+        .play-btn:hover {
+            color: var(--text-primary);
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        .play-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            transition: var(--transition-smooth);
+        }
+
+        @keyframes pulse-icon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .play-btn.playing svg {
+            color: var(--accent-color);
+            animation: pulse-icon 1s infinite ease-in-out;
+        }
+
+        /* Dynamic Guide Subtitle */
+        .guide-subtitle {
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            color: var(--text-secondary);
+            min-height: 1.5rem;
+            font-weight: 400;
+            transition: var(--transition-smooth);
+            letter-spacing: 0.02em;
+        }
+
+        .guide-subtitle em {
+            color: var(--text-primary);
+            font-style: normal;
+            font-weight: 500;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+
+        .guide-subtitle .highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .question {
+                margin-bottom: 1.75rem;
+            }
+            .ipa-container {
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        /* Footer info */
+        footer {
+            position: relative;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            z-index: 2;
+            letter-spacing: 0.05em;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-container">
+        <div class="glow-effect"></div>
+    </div>
+
+    <main class="content">
+        <h1 class="question">How do you pronounce Dobuler?</h1>
+        <div class="brand-name">Dobuler</div>
+        
+        <div class="pronunciation-wrapper">
+            <div class="ipa-container" id="ipaContainer">
+                <div class="ipa-word">
+                    <span class="ipa-syllable" data-syllable="dob" data-example="pot">dob</span>
+                    <span class="ipa-dot">·</span>
+                    <span class="ipa-syllable" data-syllable="u" data-example="you">u</span>
+                    <span class="ipa-dot">·</span>
+                    <span class="ipa-syllable" data-syllable="ler" data-example="purr">ler</span>
+                </div>
+                <button class="play-btn" id="playBtn" aria-label="Listen to pronunciation">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <p class="guide-subtitle" id="guideSubtitle"></p>
+        </div>
+    </main>
+
+    <footer>
+        &copy; <span id="year"></span> dobuler.com. All rights reserved.
+    </footer>
+
+    <script>
+        // Set dynamic footer year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Syllable interactions
+        const syllables = document.querySelectorAll('.ipa-syllable');
+        const subtitle = document.getElementById('guideSubtitle');
+        const defaultText = 'IPA: <strong style="color: #ffffff; font-weight: 600; letter-spacing: 0.02em;">/ˈdɑb.ju.lɚ/</strong>';
+
+        // Initialize default text
+        subtitle.innerHTML = defaultText;
+
+        syllables.forEach(syllable => {
+            syllable.addEventListener('mouseenter', () => {
+                const syl = syllable.getAttribute('data-syllable');
+                const ex = syllable.getAttribute('data-example');
+                subtitle.innerHTML = `<span class="highlight">${syl}</span> as in <em>${ex}</em>`;
+            });
+            
+            syllable.addEventListener('mouseleave', () => {
+                subtitle.innerHTML = defaultText;
+            });
+        });
+
+        // Web Speech Synthesis
+        const playBtn = document.getElementById('playBtn');
+        let synth = window.speechSynthesis;
+
+        function speak() {
+            if (!synth) return;
+            
+            // Cancel current speech
+            synth.cancel();
+            
+            // We use the phonetic respelling string "dob-you-ler" to ensure the Web Speech API
+            // reads the brand name correctly as configured by the user request.
+            const utterance = new SpeechSynthesisUtterance("dob-you-ler");
+            utterance.rate = 0.85; // Natural instruction pace
+            utterance.pitch = 1.0;
+            
+            // Find English voice
+            const voices = synth.getVoices();
+            const preferredVoice = voices.find(v => v.lang === 'en-US' && v.name.includes('Google')) ||
+                                  voices.find(v => v.lang.startsWith('en-US')) ||
+                                  voices.find(v => v.lang.startsWith('en-'));
+            
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
+
+            playBtn.classList.add('playing');
+
+            utterance.onend = () => playBtn.classList.remove('playing');
+            utterance.onerror = () => playBtn.classList.remove('playing');
+
+            synth.speak(utterance);
+        }
+
+        playBtn.addEventListener('click', speak);
+
+        // Pre-load voices if asynchronously loaded
+        if (synth && synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = () => {};
+        }
+
+        // Subtle background glow motion relative to cursor
+        const glow = document.querySelector('.glow-effect');
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            const moveX = (x - centerX) * 0.08;
+            const moveY = (y - centerY) * 0.08;
+            
+            glow.style.setProperty('--mouse-x', `${moveX}px`);
+            glow.style.setProperty('--mouse-y', `${moveY}px`);
+        });
+    </script>
+</body>
+</html>
