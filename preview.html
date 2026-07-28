@@ -12,7 +12,7 @@
     <!-- Google Fonts: Inter (Body), Abril Fatface (Elephant), Balthazar (Copperplate fallback) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Balthazar&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Balthazar&family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet">
     
     <style>
         /* Design Tokens & CSS Variables */
@@ -52,6 +52,11 @@
             --accent-hover: #e5e5e5;
             --accent-glow: rgba(255, 255, 255, 0.08);
             --shadow-card: 0 15px 35px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Prevent transition flash on load */
+        .no-transition * {
+            transition: none !important;
         }
 
         /* Base Resets */
@@ -654,7 +659,7 @@
         }
     </style>
 </head>
-<body>
+<body class="no-transition">
 
     <div class="radial-glow">
         <div class="glow-effect"></div>
@@ -1046,6 +1051,11 @@
             
             glow.style.setProperty('--mouse-x', `${moveX}px`);
             glow.style.setProperty('--mouse-y', `${moveY}px`);
+        });
+
+        // 7. Prevent theme/color transition animations during initial page layout
+        window.addEventListener('load', () => {
+            document.body.classList.remove('no-transition');
         });
     </script>
 </body>
