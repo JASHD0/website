@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fall 2026 Sports Calendar</title>
-    <!-- Favicon (Retro Game Controller) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ff007f'/><circle cx='30' cy='50' r='10' fill='%2300ffff'/><circle cx='70' cy='50' r='10' fill='%2339ff14'/></svg>">
+    <!-- Favicon (Elegant Bold "JD" - Pink and Green) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='96' height='96' x='2' y='2' rx='22' fill='%23ff007f' stroke='%2339ff14' stroke-width='4'/><text x='50%' y='58%' font-family='Georgia, serif' font-weight='bold' font-size='60' fill='%2339ff14' dominant-baseline='middle' text-anchor='middle'>JD</text></svg>">
     <!-- Google Fonts: Press Start 2P for retro headers, Outfit for body readability -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,14 +24,13 @@
             --font-body: 'Outfit', sans-serif;
             
             /* Team Colors */
-            --color-dolphins: #008E97;
+            --color-dolphins: #00B5AD;
             --color-marlins: #00A3E0;
-            --color-liverpool: #C8102E;
+            --color-liverpool: #E6193C;
             --color-heat: #FF007F; /* Miami Vice Hot Pink */
-            --color-panthers: #1D428A; /* Florida Panthers Bright Navy */
-            --color-ucf: #BA9B37;
-            --color-uf: #0021A5;
-            --color-campbell: #FF8A00; /* Brighter Camels Orange */
+            --color-panthers: #2C6BFF; /* Brighter Panthers Blue */
+            --color-ucf: #F4B41A; /* Brighter UCF Gold */
+            --color-uf: #FF5500; /* Gators Orange */
         }
 
         * {
@@ -367,47 +366,6 @@
         .sound-btn:hover {
             background: var(--neon-green);
             color: #000000;
-        }
-
-        .volume-container {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-family: var(--font-retro);
-            font-size: 0.5rem;
-            color: var(--neon-green);
-        }
-
-        @media (min-width: 768px) {
-            .volume-container {
-                font-size: 0.55rem;
-            }
-        }
-
-        .volume-slider {
-            -webkit-appearance: none;
-            width: 60px;
-            height: 6px;
-            background: #2b2b3a;
-            border: 1px solid var(--neon-green);
-            border-radius: 4px;
-            outline: none;
-        }
-
-        @media (min-width: 768px) {
-            .volume-slider {
-                width: 80px;
-                height: 8px;
-            }
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 10px;
-            height: 10px;
-            background: var(--neon-green);
-            border-radius: 50%;
-            cursor: pointer;
         }
 
         /* Calendar Card Container */
@@ -917,12 +875,6 @@
                 font-size: 0.45rem;
                 padding: 0.25rem 0.4rem;
             }
-            .volume-container {
-                font-size: 0.45rem;
-            }
-            .volume-slider {
-                width: 50px;
-            }
             .selectors-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.3rem;
@@ -1027,7 +979,7 @@
 </head>
 <body>
 
-    <div class="scanlines"></div>
+    <div class="scanlines hidden"></div>
 
     <div class="arcade-cabinet">
         <!-- Scoreboard / Header -->
@@ -1049,48 +1001,40 @@
                         <span>🔊 SFX: ON</span>
                     </button>
                     <button class="sound-btn" id="scanlines-toggle" title="Toggle CRT scanlines">
-                        <span>📺 CRT: ON</span>
+                        <span>📺 CRT: OFF</span>
                     </button>
-                    <div class="volume-container">
-                        <span>VOL:</span>
-                        <input type="range" class="volume-slider" id="volume-control" min="0" max="1" step="0.1" value="0.5">
-                    </div>
                 </div>
             </div>
 
             <!-- Team Selection Arcade Buttons -->
             <div class="selectors-grid">
-                <button class="arcade-btn" data-team="UF" style="--team-color: var(--color-uf); --team-shadow: #000c40;">
+                <button class="arcade-btn" data-team="UF" style="--team-color: var(--color-uf); --team-shadow: #b33c00;">
                     <span class="btn-badge"></span>
                     <span>GATORS</span>
                 </button>
-                <button class="arcade-btn" data-team="UCF" style="--team-color: var(--color-ucf); --team-shadow: #4d3d0f;">
-                    <span class="btn-badge"></span>
-                    <span>KNIGHTS</span>
-                </button>
-                <button class="arcade-btn" data-team="Dolphins" style="--team-color: var(--color-dolphins); --team-shadow: #00363a;">
-                    <span class="btn-badge"></span>
-                    <span>DOLPHINS</span>
-                </button>
-                <button class="arcade-btn" data-team="Marlins" style="--team-color: var(--color-marlins); --team-shadow: #003a52;">
+                <button class="arcade-btn" data-team="Marlins" style="--team-color: var(--color-marlins); --team-shadow: #006287;">
                     <span class="btn-badge"></span>
                     <span>MARLINS</span>
                 </button>
-                <button class="arcade-btn" data-team="Liverpool" style="--team-color: var(--color-liverpool); --team-shadow: #4a000a;">
-                    <span class="btn-badge"></span>
-                    <span>LIVERPOOL</span>
-                </button>
-                <button class="arcade-btn" data-team="Heat" style="--team-color: var(--color-heat); --team-shadow: #8a0044;">
+                <button class="arcade-btn" data-team="Heat" style="--team-color: var(--color-heat); --team-shadow: #b30059;">
                     <span class="btn-badge"></span>
                     <span>HEAT</span>
                 </button>
-                <button class="arcade-btn" data-team="Panthers" style="--team-color: var(--color-panthers); --team-shadow: #0b1a38;">
+                <button class="arcade-btn" data-team="Dolphins" style="--team-color: var(--color-dolphins); --team-shadow: #006d68;">
+                    <span class="btn-badge"></span>
+                    <span>DOLPHINS</span>
+                </button>
+                <button class="arcade-btn" data-team="Panthers" style="--team-color: var(--color-panthers); --team-shadow: #003cb3;">
                     <span class="btn-badge"></span>
                     <span>PANTHERS</span>
                 </button>
-                <button class="arcade-btn" data-team="Campbell" style="--team-color: var(--color-campbell); --team-shadow: #8f3400;">
+                <button class="arcade-btn" data-team="Liverpool" style="--team-color: var(--color-liverpool); --team-shadow: #99071c;">
                     <span class="btn-badge"></span>
-                    <span>CAMELS</span>
+                    <span>LIVERPOOL</span>
+                </button>
+                <button class="arcade-btn" data-team="UCF" style="--team-color: var(--color-ucf); --team-shadow: #8c6206;">
+                    <span class="btn-badge"></span>
+                    <span>KNIGHTS</span>
                 </button>
             </div>
         </section>
@@ -1145,6 +1089,9 @@
         </main>
 
         <div class="pixel-banner"></div>
+        <div class="footer-note">
+            Note: Miami Heat (NBA) 2026-27 schedule is expected in mid-August.
+        </div>
     </div>
 
 
@@ -1189,7 +1136,7 @@
             { date: '2026-10-25', time: '1:00 PM', opponent: 'Jets', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'AFC East division clash at MetLife Stadium.' },
             { date: '2026-11-01', time: '1:00 PM', opponent: 'Bills', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'CBS', details: 'AFC East home showdown in Miami.' },
             { date: '2026-11-08', time: '4:05 PM', opponent: 'Patriots', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'Divisional road trip to Foxborough.' },
-            { date: '2026-11-15', time: '1:00 PM', opponent: 'Jets', team: 'Dolphins', type: 'Home', sport: 'CBS', details: 'AFC East division clash in Miami.' },
+            { date: '2026-11-15', time: '1:00 PM', opponent: 'Jets', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'CBS', details: 'AFC East division clash in Miami.' },
             { date: '2026-11-22', time: '4:25 PM', opponent: 'Colts', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'Road matchup in Indianapolis.' },
             { date: '2026-11-26', time: '12:30 PM', opponent: 'Bills (Thanksgiving)', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'CBS', details: 'Thanksgiving Day national game hosting Buffalo.' },
             { date: '2026-12-06', time: '4:05 PM', opponent: 'Broncos', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'December road test in Denver.' },
@@ -1263,22 +1210,49 @@
             { date: '2026-11-21', time: '12:30 PM', opponent: 'Manchester United', team: 'Liverpool', type: 'Home', sport: 'Soccer', channel: 'USA / Peacock', details: 'Historic North West Derby at Anfield.' },
             { date: '2026-11-28', time: '7:30 AM', opponent: 'Everton', team: 'Liverpool', type: 'Away', sport: 'Soccer', channel: 'USA / Peacock', details: 'Merseyside Derby at Goodison Park.' },
 
-            // Florida Panthers (NHL - 2026-2027 Schedule Pending Release)
-            // Miami Heat (NBA - 2026-2027 Schedule Pending Release)
+            // Florida Panthers (NHL)
+            { date: '2026-09-29', time: '5:00 PM', opponent: 'Carolina Hurricanes', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Carolina Hurricanes.' },
+            { date: '2026-10-01', time: '10:00 PM', opponent: 'San Jose Sharks', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at San Jose Sharks.' },
+            { date: '2026-10-04', time: '8:00 PM', opponent: 'Anaheim Ducks', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Anaheim Ducks.' },
+            { date: '2026-10-06', time: '10:30 PM', opponent: 'Los Angeles Kings', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Los Angeles Kings.' },
+            { date: '2026-10-10', time: '6:00 PM', opponent: 'Minnesota Wild', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Minnesota Wild at Amerant Bank Arena.' },
+            { date: '2026-10-12', time: '1:00 PM', opponent: 'Buffalo Sabres', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Buffalo Sabres.' },
+            { date: '2026-10-13', time: '6:15 PM', opponent: 'Columbus Blue Jackets', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Columbus Blue Jackets.' },
+            { date: '2026-10-15', time: '7:00 PM', opponent: 'Vancouver Canucks', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Vancouver Canucks at Amerant Bank Arena.' },
+            { date: '2026-10-17', time: '6:00 PM', opponent: 'Seattle Kraken', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Seattle Kraken at Amerant Bank Arena.' },
+            { date: '2026-10-21', time: '7:30 PM', opponent: 'Ottawa Senators', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Ottawa Senators.' },
+            { date: '2026-10-22', time: '7:00 PM', opponent: 'Pittsburgh Penguins', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Pittsburgh Penguins.' },
+            { date: '2026-10-25', time: '3:00 PM', opponent: 'Chicago Blackhawks', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Chicago Blackhawks.' },
+            { date: '2026-10-27', time: '8:00 PM', opponent: 'Winnipeg Jets', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Winnipeg Jets.' },
+            { date: '2026-10-30', time: '7:00 PM', opponent: 'Winnipeg Jets', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Winnipeg Jets at Amerant Bank Arena.' },
+            { date: '2026-11-02', time: '7:00 PM', opponent: 'Detroit Red Wings', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Detroit Red Wings at Amerant Bank Arena.' },
+            { date: '2026-11-04', time: '7:30 PM', opponent: 'Chicago Blackhawks', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Chicago Blackhawks at Amerant Bank Arena.' },
+            { date: '2026-11-07', time: '12:30 PM', opponent: 'Washington Capitals', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Washington Capitals.' },
+            { date: '2026-11-08', time: '1:00 PM', opponent: 'Boston Bruins', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Boston Bruins.' },
+            { date: '2026-11-10', time: '7:00 PM', opponent: 'Columbus Blue Jackets', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Columbus Blue Jackets.' },
+            { date: '2026-11-12', time: '7:00 PM', opponent: 'Detroit Red Wings', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Detroit Red Wings at Amerant Bank Arena.' },
+            { date: '2026-11-14', time: '7:00 PM', opponent: 'St. Louis Blues', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at St. Louis Blues.' },
+            { date: '2026-11-15', time: '8:00 PM', opponent: 'Dallas Stars', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Dallas Stars.' },
+            { date: '2026-11-17', time: '7:00 PM', opponent: 'Edmonton Oilers', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Edmonton Oilers at Amerant Bank Arena.' },
+            { date: '2026-11-21', time: '6:00 PM', opponent: 'Buffalo Sabres', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Buffalo Sabres at Amerant Bank Arena.' },
+            { date: '2026-11-25', time: '7:00 PM', opponent: 'Ottawa Senators', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Ottawa Senators at Amerant Bank Arena.' },
+            { date: '2026-11-27', time: '3:00 PM', opponent: 'Washington Capitals', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Washington Capitals.' },
+            { date: '2026-11-28', time: '6:00 PM', opponent: 'Tampa Bay Lightning', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Tampa Bay Lightning at Amerant Bank Arena.' },
+            { date: '2026-12-01', time: '7:00 PM', opponent: 'New York Islanders', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at New York Islanders.' },
+            { date: '2026-12-03', time: '7:00 PM', opponent: 'Toronto Maple Leafs', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Toronto Maple Leafs.' },
+            { date: '2026-12-05', time: '1:00 PM', opponent: 'Montreal Canadiens', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Montreal Canadiens.' },
+            { date: '2026-12-08', time: '7:00 PM', opponent: 'Boston Bruins', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Boston Bruins at Amerant Bank Arena.' },
+            { date: '2026-12-10', time: '7:00 PM', opponent: 'Pittsburgh Penguins', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Pittsburgh Penguins at Amerant Bank Arena.' },
+            { date: '2026-12-12', time: '7:00 PM', opponent: 'Detroit Red Wings', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Detroit Red Wings.' },
+            { date: '2026-12-14', time: '7:00 PM', opponent: 'Philadelphia Flyers', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Philadelphia Flyers.' },
+            { date: '2026-12-15', time: '7:00 PM', opponent: 'Boston Bruins', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Boston Bruins.' },
+            { date: '2026-12-19', time: '1:00 PM', opponent: 'Calgary Flames', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Calgary Flames at Amerant Bank Arena.' },
+            { date: '2026-12-21', time: '7:00 PM', opponent: 'St. Louis Blues', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs St. Louis Blues at Amerant Bank Arena.' },
+            { date: '2026-12-26', time: '6:00 PM', opponent: 'Tampa Bay Lightning', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Tampa Bay Lightning at Amerant Bank Arena.' },
+            { date: '2026-12-28', time: '7:00 PM', opponent: 'Nashville Predators', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Nashville Predators at Amerant Bank Arena.' },
+            { date: '2026-12-30', time: '7:00 PM', opponent: 'Buffalo Sabres', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Buffalo Sabres at Amerant Bank Arena.' },
 
-            // Campbell Camels (FCS)
-            { date: '2026-08-29', time: '5:30 PM', opponent: 'ETSU', team: 'Campbell', type: 'Away', sport: 'Football', channel: 'ESPN+', details: 'Season opener in Johnson City, TN.' },
-            { date: '2026-09-05', time: '3:30 PM', opponent: 'Western Carolina', team: 'Campbell', type: 'Home', sport: 'Football', channel: 'FloFootball', details: 'Home opener in Buies Creek, NC.' },
-            { date: '2026-09-12', time: '5:30 PM', opponent: 'Florida', team: 'Campbell', type: 'Away', sport: 'Football', channel: 'SEC Network', details: 'FBS road matchup in Gainesville, FL.' },
-            { date: '2026-09-19', time: '6:00 PM', opponent: 'North Carolina A&T', team: 'Campbell', type: 'Home', sport: 'Football', channel: 'FloFootball', details: 'CAA Conference opener in Buies Creek, NC.' },
-            { date: '2026-09-26', time: '6:00 PM', opponent: 'Hampton', team: 'Campbell', type: 'Away', sport: 'Football', channel: 'FloFootball', details: 'CAA road matchup in Hampton, VA.' },
-            { date: '2026-10-03', time: '6:00 PM', opponent: 'North Carolina Central', team: 'Campbell', type: 'Away', sport: 'Football', channel: 'ESPN+', details: 'Non-conference road game in Durham, NC.' },
-            { date: '2026-10-17', time: '3:30 PM', opponent: 'Towson', team: 'Campbell', type: 'Home', sport: 'Football', channel: 'FloFootball', details: 'CAA home clash in Buies Creek, NC.' },
-            { date: '2026-10-24', time: '1:00 PM', opponent: 'Maine', team: 'Campbell', type: 'Away', sport: 'Football', channel: 'FloFootball', details: 'CAA road trip to Orono, ME.' },
-            { date: '2026-10-31', time: '12:00 PM', opponent: 'UAlbany', team: 'Campbell', type: 'Away', sport: 'Football', channel: 'FloFootball', details: 'CAA road matchup in Albany, NY.' },
-            { date: '2026-11-07', time: '1:00 PM', opponent: 'Stony Brook', team: 'Campbell', type: 'Home', sport: 'Football', channel: 'FloFootball', details: 'CAA home game in Buies Creek, NC.' },
-            { date: '2026-11-14', time: '2:00 PM', opponent: 'Elon', team: 'Campbell', type: 'Away', sport: 'Football', channel: 'FloFootball', details: 'CAA road matchup in Elon, NC.' },
-            { date: '2026-11-21', time: '1:00 PM', opponent: 'Monmouth', team: 'Campbell', type: 'Home', sport: 'Football', channel: 'FloFootball', details: 'Regular season finale in Buies Creek, NC.' }
+            // Miami Heat (NBA - 2026-2027 Schedule Pending Release)
         ];
 
         // State variables
@@ -1312,7 +1286,7 @@
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 masterVolume = audioCtx.createGain();
-                masterVolume.gain.value = parseFloat(document.getElementById('volume-control').value);
+                masterVolume.gain.value = 0.5; // Default volume set to 50%
                 masterVolume.connect(audioCtx.destination);
             }
             if (audioCtx.state === 'suspended') {
@@ -1507,13 +1481,6 @@
             }
         });
 
-        document.getElementById('volume-control').addEventListener('input', (e) => {
-            const val = parseFloat(e.target.value);
-            if (masterVolume) {
-                masterVolume.gain.setValueAtTime(val, audioCtx.currentTime);
-            }
-        });
-
         // Blinking colon and real clock updates
         setInterval(() => {
             const clockEl = document.getElementById('board-clock');
@@ -1541,8 +1508,7 @@
             'Marlins': { abbr: 'MAR', name: 'Marlins', color: 'var(--color-marlins)' },
             'Liverpool': { abbr: 'LIV', name: 'Liverpool', color: 'var(--color-liverpool)' },
             'Heat': { abbr: 'MIA', name: 'Heat', color: 'var(--color-heat)' },
-            'Panthers': { abbr: 'PAN', name: 'Panthers', color: 'var(--color-panthers)' },
-            'Campbell': { abbr: 'CAM', name: 'Camels', color: 'var(--color-campbell)' }
+            'Panthers': { abbr: 'PAN', name: 'Panthers', color: 'var(--color-panthers)' }
         };
 
         // Jainil Mode Easter Egg Check
