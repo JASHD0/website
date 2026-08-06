@@ -9,7 +9,7 @@
     <!-- SEO Meta Tags -->
     <meta name="description" content="Virtual resume and professional portfolio of Jason Dobuler, JD Candidate at UF Levin College of Law and incoming Summer Associate at Trenam Law.">
     
-    <!-- Google Fonts: Inter (Body), Abril Fatface (Elephant), Balthazar (Copperplate fallback) -->
+    <!-- Google Fonts: Inter (Body), Abril Fatface (Display Serif), Balthazar (Copperplate fallback) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Balthazar&family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet">
@@ -127,7 +127,7 @@
             opacity: 1;
         }
 
-        /* Floating Theme Switcher & Actions */
+        /* Top Navigation & Theme Toggle */
         .top-nav {
             max-width: 1100px;
             margin: 0 auto;
@@ -185,27 +185,28 @@
             display: none;
         }
 
-        /* Layout Main Grid */
+        /* Layout Container */
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 2rem;
             position: relative;
             z-index: 10;
         }
 
-        /* Interactive Business Card Section */
+        /* 3D Business Card Section (Visible on Desktop) */
         .card-perspective {
             perspective: 1200px;
-            margin: 2rem 0 2rem 0;
+            margin: 2rem 0 4rem 0;
+            display: block;
         }
 
         .business-card {
             background-color: var(--bg-card);
             border: 2px solid var(--border-card);
             border-radius: 4px;
-            padding: 4rem 2rem;
-            min-height: 380px;
+            padding: 4.5rem 2rem;
+            min-height: 390px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -228,13 +229,14 @@
 
         .card-title-main {
             font-family: var(--font-display);
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: normal;
+            font-size: clamp(2.5rem, 6vw, 4.2rem);
+            font-weight: normal; /* Normal weight to match original branding card name styling */
             letter-spacing: normal;
             color: var(--text-primary);
             line-height: 1.1;
             margin-bottom: 0.8rem;
             user-select: none;
+            white-space: nowrap;
         }
 
         .card-subtitle {
@@ -252,7 +254,7 @@
         .card-bottom {
             transform: translateZ(30px);
             font-family: var(--font-sub);
-            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
             letter-spacing: 0.12em;
             color: var(--text-card-muted);
             text-transform: uppercase;
@@ -279,21 +281,86 @@
             border-bottom-color: var(--text-primary);
         }
 
-        /* Pronunciation Overlay Inside Card */
-        .pronunciation-badge {
+        .business-card .pronunciation-badge {
             margin-top: -1rem;
             margin-bottom: 2rem;
             transform: translateZ(40px);
+        }
+
+        /* Flat Typography Header (Redesigned & Visible on Mobile) */
+        .site-header {
+            text-align: center;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .site-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 8.2vw, 3.2rem); /* Increased minimum and scale to make the name look bigger on mobile */
+            font-weight: normal; /* Normal weight to match original branding */
+            color: var(--text-primary);
+            line-height: 1.1;
+            margin-bottom: 0.6rem;
+            user-select: none;
+            letter-spacing: -0.01em;
+            white-space: nowrap; /* Prevent name wrapping */
+        }
+
+        .site-contact {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: clamp(0.72rem, 2.7vw, 0.95rem); /* Increased minimum and scale to make the contact info bigger on mobile */
+            letter-spacing: 0.15em;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap; /* Prevent wrapping email/phone to match desktop card style */
+            white-space: nowrap;
+            gap: 0.4rem 0.8rem;
+            margin-bottom: 1.2rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .site-contact a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            padding-bottom: 2px;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .site-contact a:hover {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .site-contact .separator {
+            color: var(--text-tertiary);
+            font-weight: 300;
+            user-select: none;
+        }
+
+        /* Pronunciation Badge */
+        .pronunciation-badge {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
+            z-index: 15;
         }
 
         .ipa-trigger {
-            background: rgba(0,0,0,0.03);
+            background: rgba(0, 0, 0, 0.03);
             border: 1px solid var(--border-color);
-            padding: 0.4rem 1rem;
+            padding: 0.4rem 1.2rem;
             border-radius: 9999px;
+            font-family: var(--font-sans);
+            font-weight: 500;
             font-size: 0.85rem;
             color: var(--text-secondary);
             cursor: pointer;
@@ -301,10 +368,11 @@
             align-items: center;
             gap: 0.5rem;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         [data-theme="dark"] .ipa-trigger {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .ipa-trigger:hover {
@@ -317,6 +385,7 @@
             width: 14px;
             height: 14px;
             fill: currentColor;
+            transition: transform 0.3s ease;
         }
 
         /* Dropdown Panel for Pronunciation */
@@ -336,7 +405,7 @@
         }
 
         .panel-content {
-            background: var(--bg-page);
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1rem 1.5rem;
@@ -344,7 +413,7 @@
             flex-direction: column;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: var(--shadow-card);
             transition: var(--transition-theme);
         }
 
@@ -429,12 +498,12 @@
         .section-divider {
             height: 1px;
             background: var(--border-color);
-            margin: 3rem 0;
+            margin: 1.5rem 0; /* Reduced default (desktop) spacing between content and line */
             position: relative;
         }
 
         .resume-section {
-            margin-bottom: 4rem;
+            margin-bottom: 2rem; /* Reduced default (desktop) spacing between sections */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -454,13 +523,14 @@
         }
 
         .section-header {
+            /* Reverted back to original website style configuration: 1px line, original font-sub stack, bold weight */
             font-family: var(--font-sub);
             font-size: 1.05rem;
-            font-weight: bold;
+            font-weight: bold; 
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--text-primary);
-            margin-bottom: 2rem;
+            margin-bottom: 1.2rem; /* Reduced default (desktop) spacing below heading */
             border-bottom: 1px solid var(--text-primary);
             padding-bottom: 0.5rem;
             display: inline-block;
@@ -468,7 +538,7 @@
 
         /* Timeline / Entry Item */
         .resume-item {
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem; /* Reduced default (desktop) spacing below item blocks */
             position: relative;
             transition: all 0.3s ease;
             border-left: 2px solid transparent;
@@ -492,7 +562,7 @@
         .org-name {
             font-family: var(--font-sans);
             font-size: 1.15rem;
-            font-weight: 700;
+            font-weight: 700; /* Reverted back to the website's original weight (700) */
             color: var(--text-primary);
         }
 
@@ -514,18 +584,19 @@
             align-items: center;
             flex-wrap: wrap;
             font-size: 0.95rem;
-            font-weight: 500;
+            font-weight: 500; /* Reverted back to original weight */
             color: var(--text-secondary);
             margin-bottom: 0.8rem;
             gap: 0.5rem;
         }
 
         .role-title {
+            font-weight: 500; /* Reverted role titles back to original weight, retaining italic style */
             font-style: italic;
         }
 
         .gpa-rank {
-            font-weight: 600;
+            font-weight: 600; /* Reverted GPA ranks back to original weight */
             font-size: 0.85rem;
             color: var(--text-primary);
         }
@@ -550,39 +621,23 @@
             color: var(--text-tertiary);
         }
 
-        /* Tag Pill Container */
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.6rem;
-        }
-
-        .tag-pill {
-            font-family: var(--font-sub);
-            font-size: 0.65rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: all 0.25s ease;
-        }
-
-        .resume-item:hover .tag-pill {
-            border-color: var(--text-secondary);
-            color: var(--text-primary);
-        }
-
         /* Profile Block */
         .profile-text {
             font-size: 1.05rem;
             color: var(--text-secondary);
             font-weight: 400;
             line-height: 1.7;
+        }
+
+        .profile-link {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--text-secondary);
+            transition: border-bottom-color 0.3s ease;
+        }
+
+        .profile-link:hover {
+            border-bottom-color: var(--text-primary);
         }
 
         /* Grid for Interests */
@@ -624,7 +679,7 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--text-primary);
-            font-weight: bold;
+            font-weight: bold; /* Reverted back to original weight */
         }
 
         /* Footer */
@@ -642,12 +697,32 @@
 
         /* Responsive Design Adjustments */
         @media (max-width: 768px) {
-            .business-card {
-                padding: 3rem 1.5rem;
-                min-height: 350px;
+            .card-perspective {
+                display: none;
             }
-            .card-title-main {
-                font-size: 2.5rem;
+            .top-nav {
+                justify-content: center; /* Center the night mode toggle button on mobile viewports */
+                padding: 1.5rem 1rem 0.5rem 1rem;
+            }
+            .site-header {
+                display: flex;
+                border-top: 2px solid var(--border-card);
+                border-bottom: 2px solid var(--border-card);
+                background: var(--bg-card);
+                border-radius: 4px;
+                box-shadow: var(--shadow-card);
+                margin-top: 1.5rem;
+                padding: 2.2rem 1rem; /* Reduced top/bottom padding to form a perfect card aspect ratio (3.5 x 2 shape) */
+            }
+            .site-contact {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                white-space: nowrap;
+                gap: 0.4rem 0.8rem;
+                margin-bottom: 1.2rem;
+            }
+            .site-contact .separator {
+                display: inline; /* Keep the separator diagonal slash on a single line */
             }
             .item-header {
                 flex-direction: column;
@@ -663,16 +738,35 @@
             .item-date {
                 margin-top: 0.2rem;
             }
+            
+            /* Responsive spacing adjustments for mobile layout */
+            .section-header {
+                margin-bottom: 1rem;
+            }
+            .resume-section {
+                margin-bottom: 1.5rem;
+            }
+            .section-divider {
+                margin: 1.2rem 0;
+            }
+            .resume-item {
+                margin-bottom: 1.5rem;
+            }
         }
 
-        @media (max-width: 600px) {
-            .card-bottom {
-                flex-direction: column;
-                gap: 0.6rem;
-                align-items: center;
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem; /* Maximize card width on very narrow mobile screens */
             }
-            .card-bottom span {
-                display: none; /* Hide slashes on vertical mobile layout */
+            .resume-item:hover {
+                padding-left: 0.5rem;
+            }
+            .site-header {
+                padding: 2.2rem 0.5rem; /* Maximize inside workspace to prevent wrapping */
+            }
+            .ipa-trigger {
+                font-size: 0.78rem; /* Slightly smaller for single-line fit */
+                padding: 0.4rem 0.8rem;
             }
         }
     </style>
@@ -700,37 +794,37 @@
 
     <main class="container">
         
-        <!-- Business Card Area -->
+        <!-- 3D Business Card Header (Visible on Desktop) -->
         <div class="card-perspective">
             <div class="business-card" id="businessCard" title="Hover & move cursor to tilt card">
                 <div class="card-inner">
                     <h1 class="card-title-main">Jason Dobuler</h1>
-                    <div class="card-subtitle">J.D. Candidate &amp; Incoming Summer Associate</div>
+                    <div class="card-subtitle">J.D. Candidate Focusing on Bankruptcy Law</div>
                     
-                    <!-- Integrated Pronunciation Badge -->
+                    <!-- Pronunciation Badge in Card -->
                     <div class="pronunciation-badge">
-                        <button class="ipa-trigger" id="ipaTrigger" aria-expanded="false" aria-label="Show pronunciation details">
+                        <button class="ipa-trigger" aria-expanded="false" aria-label="Show pronunciation details">
                             <span>How do you pronounce my last name?</span>
                             <svg viewBox="0 0 24 24">
                                 <path d="M7 10l5 5 5-5H7z"/>
                             </svg>
                         </button>
                         
-                        <div class="pronunc-panel" id="pronuncPanel">
+                        <div class="pronunc-panel">
                             <div class="panel-content">
-                                <div class="ipa-display" id="ipaContainer">
+                                <div class="ipa-display">
                                     <span class="ipa-syllable" data-syllable="dob" data-example="pot">dob</span>
                                     <span class="ipa-dot">·</span>
                                     <span class="ipa-syllable" data-syllable="u" data-example="you">u</span>
                                     <span class="ipa-dot">·</span>
                                     <span class="ipa-syllable" data-syllable="ler" data-example="purr">ler</span>
-                                    <button class="audio-btn" id="audioBtn" aria-label="Play last name pronunciation audio">
+                                    <button class="audio-btn" aria-label="Play last name pronunciation audio">
                                         <svg viewBox="0 0 24 24">
                                             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
                                         </svg>
                                     </button>
                                 </div>
-                                <p class="ipa-explain" id="ipaExplain">IPA: <strong>/ˈdɑb.ju.lɚ/</strong></p>
+                                <p class="ipa-explain">IPA: <strong>/ˈdɑb.ju.lɚ/</strong></p>
                             </div>
                         </div>
                     </div>
@@ -744,11 +838,49 @@
             </div>
         </div>
 
+        <!-- Typography-driven Flat Responsive Header (Visible on Mobile with Top/Bottom Borders to create card illusion) -->
+        <header class="site-header">
+            <h1 class="site-title">Jason Dobuler</h1>
+            <div class="site-contact">
+                <a href="mailto:jason@dobuler.com" title="Click to email jason@dobuler.com">jason@dobuler.com</a>
+                <span class="separator">/</span>
+                <a href="tel:5616764730" title="Click to call 561.676.4730">561.676.4730</a>
+            </div>
+            
+            <!-- Pronunciation Badge in Mobile Header -->
+            <div class="pronunciation-badge">
+                <button class="ipa-trigger" aria-expanded="false" aria-label="Show pronunciation details">
+                    <span>How do you pronounce my last name?</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </button>
+                
+                <div class="pronunc-panel">
+                    <div class="panel-content">
+                        <div class="ipa-display">
+                            <span class="ipa-syllable" data-syllable="dob" data-example="pot">dob</span>
+                            <span class="ipa-dot">·</span>
+                            <span class="ipa-syllable" data-syllable="u" data-example="you">u</span>
+                            <span class="ipa-dot">·</span>
+                            <span class="ipa-syllable" data-syllable="ler" data-example="purr">ler</span>
+                            <button class="audio-btn" aria-label="Play last name pronunciation audio">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="ipa-explain">IPA: <strong>/ˈdɑb.ju.lɚ/</strong></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
         <!-- 1. Profile section -->
         <section class="resume-section">
             <h2 class="section-header">Professional Profile</h2>
             <p class="profile-text">
-                J.D. candidate at the University of Florida Levin College of Law with a strong foundation in advertising, public relations, and legal research. Developing a specialized focus in Bankruptcy and Creditors' Rights, backed by federal judicial internship experience and upcoming summer associate practice at a leading regional firm. Feel free to <a href="https://www.linkedin.com/in/jasondob/" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed var(--text-secondary); transition: border-bottom-color 0.3s ease;">connect with me on LinkedIn</a>.
+                I am a J.D. candidate at the University of Florida Levin College of Law with a strong foundation in advertising, public relations, and legal research. I am developing a specialized focus in Bankruptcy and Creditors' Rights, backed by federal judicial internship experience, upcoming summer associate practice at a leading regional firm, and work as a research assistant. Feel free to <a href="https://www.linkedin.com/in/jasondob/" target="_blank" class="profile-link">connect with me on LinkedIn</a>.
             </p>
         </section>
 
@@ -889,7 +1021,7 @@
                     <span>Jupiter, FL</span>
                 </div>
                 <ul class="item-details">
-                    <li><strong>Managing Editor, <a href="https://jupiterwarcry.com/" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed var(--text-secondary);">Jupiter War Cry</a> (Student Newspaper):</strong> Guided editorial policies, managed staff, and wrote articles during senior year.</li>
+                    <li><strong>Managing Editor, <a href="https://jupiterwarcry.com/" target="_blank" class="profile-link">Jupiter War Cry</a> (Student Newspaper):</strong> Guided editorial policies, managed staff, and wrote articles during senior year.</li>
                     <li><strong>News Anchor, Jupiter High Student News:</strong> Anchored daily school-wide news broadcasts across a four-year tenure.</li>
                     <li><strong>Pathfinder Award Nominee in Communications:</strong> Nominated by school faculty to represent Jupiter High School for the prestigious Palm Beach Post county-wide scholarship.</li>
                     <li><strong>First Place in Screenwriting, Student Showcase of Films:</strong> Won first place in the screenplay category for the screenplay, <em>An Odorless Ordeal</em> (April 2019).</li>
@@ -947,56 +1079,73 @@
             }
         });
 
-        // 2. Interactive Pronunciation Dropdown Panel
-        const ipaTrigger = document.getElementById('ipaTrigger');
-        const pronuncPanel = document.getElementById('pronuncPanel');
+        // 2. Interactive Pronunciation Dropdown Panel (handles both desktop and mobile instances)
+        const ipaTriggers = document.querySelectorAll('.ipa-trigger');
+        const pronuncPanels = document.querySelectorAll('.pronunc-panel');
 
-        ipaTrigger.addEventListener('click', (e) => {
-            e.stopPropagation(); // Avoid triggering card click
-            const isOpen = pronuncPanel.classList.contains('open');
-            if (isOpen) {
-                pronuncPanel.classList.remove('open');
-                ipaTrigger.setAttribute('aria-expanded', 'false');
-                ipaTrigger.querySelector('svg').style.transform = 'rotate(0deg)';
-            } else {
-                pronuncPanel.classList.add('open');
-                ipaTrigger.setAttribute('aria-expanded', 'true');
-                ipaTrigger.querySelector('svg').style.transform = 'rotate(180deg)';
-            }
+        ipaTriggers.forEach((trigger, index) => {
+            const panel = pronuncPanels[index];
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = panel.classList.contains('open');
+                if (isOpen) {
+                    panel.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    trigger.querySelector('svg').style.transform = 'rotate(0deg)';
+                } else {
+                    // Close other panels first
+                    pronuncPanels.forEach((p, idx) => {
+                        if (idx !== index) {
+                            p.classList.remove('open');
+                            ipaTriggers[idx].setAttribute('aria-expanded', 'false');
+                            ipaTriggers[idx].querySelector('svg').style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    panel.classList.add('open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    trigger.querySelector('svg').style.transform = 'rotate(180deg)';
+                }
+            });
         });
 
-        // Click outside panel closes it
+        // Click outside panels closes them
         document.addEventListener('click', (e) => {
-            if (!pronuncPanel.contains(e.target) && e.target !== ipaTrigger && !ipaTrigger.contains(e.target)) {
-                pronuncPanel.classList.remove('open');
-                ipaTrigger.setAttribute('aria-expanded', 'false');
-                ipaTrigger.querySelector('svg').style.transform = 'rotate(0deg)';
-            }
+            pronuncPanels.forEach((panel, index) => {
+                const trigger = ipaTriggers[index];
+                if (!panel.contains(e.target) && e.target !== trigger && !trigger.contains(e.target)) {
+                    panel.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    trigger.querySelector('svg').style.transform = 'rotate(0deg)';
+                }
+            });
         });
 
         // 3. Pronunciation Syllable Hovers
         const syllables = document.querySelectorAll('.ipa-syllable');
-        const explanation = document.getElementById('ipaExplain');
         const defaultExplain = 'IPA: <strong>/ˈdɑb.ju.lɚ/</strong>';
 
         syllables.forEach(syllable => {
-            syllable.addEventListener('click', (e) => e.stopPropagation()); // Prevent card click
+            syllable.addEventListener('click', (e) => e.stopPropagation());
             syllable.addEventListener('mouseenter', () => {
                 const syl = syllable.getAttribute('data-syllable');
                 const ex = syllable.getAttribute('data-example');
-                explanation.innerHTML = `<span style="color: var(--text-primary); font-weight: 700;">${syl}</span> as in <em>${ex}</em>`;
+                const parentPanel = syllable.closest('.panel-content');
+                const explain = parentPanel.querySelector('.ipa-explain');
+                explain.innerHTML = `<span style="color: var(--text-primary); font-weight: 700;">${syl}</span> as in <em>${ex}</em>`;
             });
             syllable.addEventListener('mouseleave', () => {
-                explanation.innerHTML = defaultExplain;
+                const parentPanel = syllable.closest('.panel-content');
+                const explain = parentPanel.querySelector('.ipa-explain');
+                explain.innerHTML = defaultExplain;
             });
         });
 
         // 4. Speech Synthesis Audio Button
-        const audioBtn = document.getElementById('audioBtn');
+        const audioBtns = document.querySelectorAll('.audio-btn');
         let synth = window.speechSynthesis;
 
         function speak(e) {
-            e.stopPropagation(); // Avoid triggering card click
+            e.stopPropagation();
             if (!synth) return;
             
             synth.cancel();
@@ -1014,42 +1163,46 @@
                 utterance.voice = preferredVoice;
             }
 
-            audioBtn.classList.add('playing');
+            audioBtns.forEach(btn => btn.classList.add('playing'));
 
-            utterance.onend = () => audioBtn.classList.remove('playing');
-            utterance.onerror = () => audioBtn.classList.remove('playing');
+            utterance.onend = () => audioBtns.forEach(btn => btn.classList.remove('playing'));
+            utterance.onerror = () => audioBtns.forEach(btn => btn.classList.remove('playing'));
 
             synth.speak(utterance);
         }
 
-        audioBtn.addEventListener('click', speak);
+        audioBtns.forEach(btn => {
+            btn.addEventListener('click', speak);
+        });
 
         if (synth && synth.onvoiceschanged !== undefined) {
             synth.onvoiceschanged = () => {};
         }
 
-        // 5. 3D Business Card Tilt Animation on Mousemove
+        // 5. 3D Business Card Tilt Animation on Mousemove (Desktop only)
         const card = document.getElementById('businessCard');
         
-        card.addEventListener('mousemove', (e) => {
-            const cardRect = card.getBoundingClientRect();
-            const cardWidth = cardRect.width;
-            const cardHeight = cardRect.height;
-            
-            // Mouse position relative to the card's top-left corner
-            const mouseX = e.clientX - cardRect.left;
-            const mouseY = e.clientY - cardRect.top;
-            
-            // Normalized values (-0.5 to 0.5)
-            const rotateX = ((mouseY / cardHeight) - 0.5) * -15; // Max tilt 15 degrees
-            const rotateY = ((mouseX / cardWidth) - 0.5) * 15;
-            
-            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
+        if (card) {
+            card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth > 768) {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardWidth = cardRect.width;
+                    const cardHeight = cardRect.height;
+                    
+                    const mouseX = e.clientX - cardRect.left;
+                    const mouseY = e.clientY - cardRect.top;
+                    
+                    const rotateX = ((mouseY / cardHeight) - 0.5) * -15; // Max tilt 15 degrees
+                    const rotateY = ((mouseX / cardWidth) - 0.5) * 15;
+                    
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                }
+            });
 
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            });
+        }
 
         // 6. Mouse-based radial background glow motion (tracks cursor across the viewport)
         const glow = document.querySelector('.glow-effect');
@@ -1060,7 +1213,6 @@
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
             
-            // Subtle offset movement
             const moveX = (x - centerX) * 0.1;
             const moveY = (y - centerY) * 0.1;
             
