@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jason Dobuler | Virtual Resume</title>
+    <!-- Favicon (Elegant Bold "JD" - Light Background) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='96' height='96' x='2' y='2' rx='22' fill='%23ffffff' stroke='%231E3F33' stroke-width='4'/><text x='50%' y='58%' font-family='Georgia, serif' font-weight='bold' font-size='60' fill='%231E3F33' dominant-baseline='middle' text-anchor='middle'>JD</text></svg>">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Virtual resume and professional portfolio of Jason Dobuler, JD Candidate at UF Levin College of Law and incoming Summer Associate at Trenam Law.">
+    
+    <!-- Google Fonts: Inter (Body), Abril Fatface (Display Serif), Balthazar (Copperplate fallback) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Balthazar&family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet">
+    
+    <style>
+        /* Design Tokens & CSS Variables */
+        :root {
+            /* Warm Journal Paper & Forest Green Accent Theme */
+            --bg-page: #FAF8F5; /* Warm off-white paper color from journal page */
+            --bg-card: #ffffff;
+            --bg-glow: rgba(30, 63, 51, 0.01);
+            --border-color: rgba(30, 63, 51, 0.12);
+            --border-card: #1E3F33; /* Deep forest green outline */
+            --text-primary: #111B15; /* Charcoal green-black */
+            --text-secondary: #2C3E35; /* Sage slate grey */
+            --text-tertiary: #5C6E65; /* Olive gray */
+            --text-card-muted: #1E3F33;
+            --accent: #1E3F33; /* Rich forest green accent */
+            --accent-hover: #132B22; /* Darker forest green */
+            --accent-glow: rgba(30, 63, 51, 0.05);
+            --shadow-card: 0 15px 35px rgba(30, 63, 51, 0.06), 0 5px 15px rgba(30, 63, 51, 0.03);
+            --font-display: 'Abril Fatface', Georgia, serif;
+            --font-sub: 'Copperplate', 'Copperplate Gothic Light', 'Copperplate Gothic', 'Balthazar', serif;
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --transition-theme: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        [data-theme="dark"] {
+            /* Sleek Obsidian Pine Dark Theme */
+            --bg-page: #070D0A; /* Extra deep forest black */
+            --bg-card: #0F1A14; /* Muted deep green card */
+            --bg-glow: rgba(255, 255, 255, 0.01);
+            --border-color: rgba(74, 122, 102, 0.15);
+            --border-card: #3A5F4F; /* Sage boundary */
+            --text-primary: #E8F0EC; /* Soft white-green */
+            --text-secondary: #A3B8AF; /* Sage slate text */
+            --text-tertiary: #6E857C;
+            --text-card-muted: #A3B8AF;
+            --accent: #4A7A66; /* Elegant sage accent */
+            --accent-hover: #5C947D;
+            --accent-glow: rgba(74, 122, 102, 0.08);
+            --shadow-card: 0 15px 35px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Prevent transition flash on load */
+        .no-transition * {
+            transition: none !important;
+        }
+
+        /* Base Resets */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            transition: var(--transition-theme);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 5rem;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle Noise Overlay */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.018'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Hoverable Radial Background Glow for Dark Mode */
+        .radial-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .glow-effect {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
+            top: calc(50% + var(--mouse-y, 0px));
+            left: calc(50% + var(--mouse-x, 0px));
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            filter: blur(80px);
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        [data-theme="dark"] .glow-effect {
+            opacity: 1;
+        }
+
+        /* Top Navigation & Theme Toggle */
+        .top-nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+            z-index: 20;
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.6rem 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--text-primary);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+
+        .theme-toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover svg {
+            transform: rotate(20deg);
+        }
+
+        /* Show/hide icons based on theme */
+        [data-theme="light"] .theme-toggle-btn .sun-icon {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-toggle-btn .moon-icon {
+            display: none;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 3D Business Card Section (Visible on Desktop) */
+        .card-perspective {
+            perspective: 1200px;
+            margin: 2rem 0 4rem 0;
+            display: block;
+        }
+
+        .business-card {
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-card);
+            border-radius: 4px;
+            padding: 4.5rem 2rem;
+            min-height: 390px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow-card);
+            transform-style: preserve-3d;
+            transition: var(--transition-theme), transform 0.1s ease-out;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            transform: translateZ(50px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .card-title-main {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.2rem);
+            font-weight: normal; /* Normal weight to match original branding card name styling */
+            letter-spacing: normal;
+            color: var(--text-primary);
+            line-height: 1.1;
+            margin-bottom: 0.8rem;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .card-subtitle {
+            font-family: var(--font-sub);
+            font-weight: bold;
+            font-size: clamp(0.75rem, 2vw, 0.95rem);
+            letter-spacing: 0.18em;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+
+        .card-bottom {
+            transform: translateZ(30px);
+            font-family: var(--font-sub);
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            letter-spacing: 0.12em;
+            color: var(--text-card-muted);
+            text-transform: uppercase;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            width: 90%;
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+        }
+
+        .card-bottom a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            padding-bottom: 2px;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card-bottom a:hover {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .business-card .pronunciation-badge {
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            transform: translateZ(40px);
+        }
+
+        /* Flat Typography Header (Redesigned & Visible on Mobile) */
+        .site-header {
+            text-align: center;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .site-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 8.2vw, 3.2rem); /* Increased minimum and scale to make the name look bigger on mobile */
+            font-weight: normal; /* Normal weight to match original branding */
+            color: var(--text-primary);
+            line-height: 1.1;
+            margin-bottom: 0.6rem;
+            user-select: none;
+            letter-spacing: -0.01em;
+            white-space: nowrap; /* Prevent name wrapping */
+        }
+
+        .site-contact {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: clamp(0.72rem, 2.7vw, 0.95rem); /* Increased minimum and scale to make the contact info bigger on mobile */
+            letter-spacing: 0.15em;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap; /* Prevent wrapping email/phone to match desktop card style */
+            white-space: nowrap;
+            gap: 0.4rem 0.8rem;
+            margin-bottom: 1.2rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .site-contact a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            padding-bottom: 2px;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .site-contact a:hover {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .site-contact .separator {
+            color: var(--text-tertiary);
+            font-weight: 300;
+            user-select: none;
+        }
+
+        /* Pronunciation Badge */
+        .pronunciation-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            z-index: 15;
+        }
+
+        .ipa-trigger {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 1.2rem;
+            border-radius: 9999px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        [data-theme="dark"] .ipa-trigger {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .ipa-trigger:hover {
+            background: var(--text-primary);
+            color: var(--bg-card);
+            border-color: var(--text-primary);
+        }
+
+        .ipa-trigger svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        /* Dropdown Panel for Pronunciation */
+        .pronunc-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            opacity: 0;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 0.8rem;
+        }
+
+        .pronunc-panel.open {
+            max-height: 200px;
+            opacity: 1;
+        }
+
+        .panel-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition-theme);
+        }
+
+        .ipa-display {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .ipa-syllable {
+            cursor: help;
+            transition: all 0.25s ease;
+            padding: 0.1rem 0.25rem;
+            border-radius: 4px;
+            border-bottom: 1px dashed transparent;
+        }
+
+        .ipa-syllable:hover {
+            color: var(--accent);
+            background: var(--accent-glow);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .ipa-dot {
+            color: var(--text-tertiary);
+            padding: 0 0.05rem;
+            user-select: none;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-secondary);
+            padding: 0.3rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            margin-left: 0.4rem;
+        }
+
+        .audio-btn:hover {
+            color: var(--text-primary);
+            background: var(--border-color);
+            transform: scale(1.1);
+        }
+
+        .audio-btn.playing svg {
+            color: var(--text-primary);
+            animation: pulse-audio 1s infinite ease-in-out;
+        }
+
+        @keyframes pulse-audio {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .audio-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .ipa-explain {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            min-height: 1.2rem;
+            font-style: normal;
+        }
+
+        .ipa-explain em {
+            color: var(--text-primary);
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* Resume Content Styling */
+        .section-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 1.5rem 0; /* Reduced default (desktop) spacing between content and line */
+            position: relative;
+        }
+
+        .resume-section {
+            margin-bottom: 2rem; /* Reduced default (desktop) spacing between sections */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .resume-section:nth-of-type(1) { animation-delay: 0.1s; }
+        .resume-section:nth-of-type(2) { animation-delay: 0.2s; }
+        .resume-section:nth-of-type(3) { animation-delay: 0.3s; }
+        .resume-section:nth-of-type(4) { animation-delay: 0.4s; }
+        .resume-section:nth-of-type(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            /* Reverted back to original website style configuration: 1px line, original font-sub stack, bold weight */
+            font-family: var(--font-sub);
+            font-size: 1.05rem;
+            font-weight: bold; 
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin-bottom: 1.2rem; /* Reduced default (desktop) spacing below heading */
+            border-bottom: 1px solid var(--text-primary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Timeline / Entry Item */
+        .resume-item {
+            margin-bottom: 2rem; /* Reduced default (desktop) spacing below item blocks */
+            position: relative;
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+            padding-left: 0;
+        }
+
+        .resume-item:hover {
+            border-left-color: var(--border-card);
+            padding-left: 1rem;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .org-name {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            font-weight: 700; /* Reverted back to the website's original weight (700) */
+            color: var(--text-primary);
+        }
+
+        .item-date {
+            font-family: var(--font-sub);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            background: var(--bg-glow);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .item-subheader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+            font-weight: 500; /* Reverted back to original weight */
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            gap: 0.5rem;
+        }
+
+        .role-title {
+            font-weight: 500; /* Reverted role titles back to original weight, retaining italic style */
+            font-style: italic;
+        }
+
+        .gpa-rank {
+            font-weight: 600; /* Reverted GPA ranks back to original weight */
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .item-details {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .item-details li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+        }
+
+        .item-details li::before {
+            content: "•";
+            position: absolute;
+            left: 0.2rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Profile Block */
+        .profile-text {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        .profile-link {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--text-secondary);
+            transition: border-bottom-color 0.3s ease;
+        }
+
+        .profile-link:hover {
+            border-bottom-color: var(--text-primary);
+        }
+
+        /* Grid for Interests */
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .interest-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .interest-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-primary);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        }
+
+        [data-theme="dark"] .interest-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .interest-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .interest-title {
+            font-family: var(--font-sub);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            font-weight: bold; /* Reverted back to original weight */
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 6rem;
+            text-align: center;
+            font-family: var(--font-sub);
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+
+        /* Responsive Design Adjustments */
+        @media (max-width: 768px) {
+            .card-perspective {
+                display: none;
+            }
+            .top-nav {
+                justify-content: center; /* Center the night mode toggle button on mobile viewports */
+                padding: 1.5rem 1rem 0.5rem 1rem;
+            }
+            .site-header {
+                display: flex;
+                border-top: 2px solid var(--border-card);
+                border-bottom: 2px solid var(--border-card);
+                background: var(--bg-card);
+                border-radius: 4px;
+                box-shadow: var(--shadow-card);
+                margin-top: 1.5rem;
+                padding: 2.2rem 1rem; /* Reduced top/bottom padding to form a perfect card aspect ratio (3.5 x 2 shape) */
+            }
+            .site-contact {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                white-space: nowrap;
+                gap: 0.4rem 0.8rem;
+                margin-bottom: 1.2rem;
+            }
+            .site-contact .separator {
+                display: inline; /* Keep the separator diagonal slash on a single line */
+            }
+            .item-header {
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                gap: 0.2rem;
+            }
+            .item-subheader {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.2rem;
+            }
+            .item-date {
+                margin-top: 0.2rem;
+            }
+            
+            /* Responsive spacing adjustments for mobile layout */
+            .section-header {
+                display: table; /* Center align section headings on mobile screens */
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            .resume-section {
+                margin-bottom: 1.5rem;
+            }
+            .section-divider {
+                margin: 1.2rem 0;
+            }
+            .resume-item {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem; /* Maximize card width on very narrow mobile screens */
+            }
+            .resume-item:hover {
+                padding-left: 0.5rem;
+            }
+            .site-header {
+                padding: 2.2rem 0.5rem; /* Maximize inside workspace to prevent wrapping */
+            }
+            .ipa-trigger {
+                font-size: 0.78rem; /* Slightly smaller for single-line fit */
+                padding: 0.4rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="no-transition">
+
+    <div class="radial-glow">
+        <div class="glow-effect"></div>
+    </div>
+
+    <nav class="top-nav">
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+            <!-- Sun Icon (shown in dark mode) -->
+            <svg class="sun-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+            </svg>
+            <!-- Moon Icon (shown in light mode) -->
+            <svg class="moon-icon" viewBox="0 0 24 24">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+            <span id="themeText">Night Mode</span>
+        </button>
+    </nav>
+
+    <main class="container">
+        
+        <!-- 3D Business Card Header (Visible on Desktop) -->
+        <div class="card-perspective">
+            <div class="business-card" id="businessCard" title="Hover & move cursor to tilt card">
+                <div class="card-inner">
+                    <h1 class="card-title-main">Jason Dobuler</h1>
+                    <div class="card-subtitle">J.D. Candidate Focusing on Bankruptcy Law</div>
+                    
+                    <!-- Pronunciation Badge in Card -->
+                    <div class="pronunciation-badge">
+                        <button class="ipa-trigger" aria-expanded="false" aria-label="Show pronunciation details">
+                            <span>How do you pronounce my last name?</span>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M7 10l5 5 5-5H7z"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="pronunc-panel">
+                            <div class="panel-content">
+                                <div class="ipa-display">
+                                    <span class="ipa-syllable" data-syllable="dob" data-example="pot">dob</span>
+                                    <span class="ipa-dot">·</span>
+                                    <span class="ipa-syllable" data-syllable="u" data-example="you">u</span>
+                                    <span class="ipa-dot">·</span>
+                                    <span class="ipa-syllable" data-syllable="ler" data-example="purr">ler</span>
+                                    <button class="audio-btn" aria-label="Play last name pronunciation audio">
+                                        <svg viewBox="0 0 24 24">
+                                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <p class="ipa-explain">IPA: <strong>/ˈdɑb.ju.lɚ/</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-bottom">
+                    <a href="mailto:jason@dobuler.com" title="Click to email jason@dobuler.com">jason@dobuler.com</a>
+                    <span>/</span>
+                    <a href="tel:5616764730" title="Click to call 561.676.4730">561.676.4730</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typography-driven Flat Responsive Header (Visible on Mobile with Top/Bottom Borders to create card illusion) -->
+        <header class="site-header">
+            <h1 class="site-title">Jason Dobuler</h1>
+            <div class="site-contact">
+                <a href="mailto:jason@dobuler.com" title="Click to email jason@dobuler.com">jason@dobuler.com</a>
+                <span class="separator">/</span>
+                <a href="tel:5616764730" title="Click to call 561.676.4730">561.676.4730</a>
+            </div>
+            
+            <!-- Pronunciation Badge in Mobile Header -->
+            <div class="pronunciation-badge">
+                <button class="ipa-trigger" aria-expanded="false" aria-label="Show pronunciation details">
+                    <span>How do you pronounce my last name?</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </button>
+                
+                <div class="pronunc-panel">
+                    <div class="panel-content">
+                        <div class="ipa-display">
+                            <span class="ipa-syllable" data-syllable="dob" data-example="pot">dob</span>
+                            <span class="ipa-dot">·</span>
+                            <span class="ipa-syllable" data-syllable="u" data-example="you">u</span>
+                            <span class="ipa-dot">·</span>
+                            <span class="ipa-syllable" data-syllable="ler" data-example="purr">ler</span>
+                            <button class="audio-btn" aria-label="Play last name pronunciation audio">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="ipa-explain">IPA: <strong>/ˈdɑb.ju.lɚ/</strong></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 1. Profile section -->
+        <section class="resume-section">
+            <h2 class="section-header">Professional Profile</h2>
+            <p class="profile-text">
+                I am a J.D. candidate at the University of Florida Levin College of Law with a strong foundation in advertising, public relations, and legal research. I am developing a specialized focus in Bankruptcy and Creditors' Rights, backed by federal judicial internship experience, upcoming summer associate practice at a leading regional firm, and work as a research assistant. Feel free to <a href="https://www.linkedin.com/in/jasondob/" target="_blank" class="profile-link">connect with me on LinkedIn</a>.
+            </p>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 2. Education section -->
+        <section class="resume-section">
+            <h2 class="section-header">Education</h2>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="org-name">University of Florida Levin College of Law</h3>
+                    <span class="item-date">Expected May 2028</span>
+                </div>
+                <div class="item-subheader">
+                    <span class="role-title">Juris Doctor Candidate</span>
+                    <span class="gpa-rank">GPA: 3.55 | Rank: 49/225 (Top 22%)</span>
+                </div>
+                <ul class="item-details">
+                    <li><strong>Honors:</strong> Ethos of Excellence Scholar (Full Tuition, Merit-Based Scholarship)</li>
+                    <li>
+                        <strong>Activities:</strong>
+                        <ul style="list-style-type: none; padding-left: 1.5rem; margin-top: 0.4rem; margin-bottom: 0;">
+                            <li style="margin-bottom: 0.3rem;"><strong>Journal of Technology Law &amp; Policy:</strong> Member</li>
+                            <li style="margin-bottom: 0.3rem;"><strong>Student Bar Association:</strong> 2L Representative</li>
+                            <li style="margin-bottom: 0.3rem;"><strong>Teaching Assistant:</strong> Legal Research (Fall 2026)</li>
+                            <li style="margin-bottom: 0.3rem;"><strong>Research Assistant:</strong> Professor Christopher Hampson</li>
+                            <li style="margin-bottom: 0;"><strong>American Bankruptcy Institute:</strong> Member</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="org-name">University of Central Florida</h3>
+                    <span class="item-date">May 2025</span>
+                </div>
+                <div class="item-subheader">
+                    <span class="role-title">Bachelor of Arts in Advertising and Public Relations</span>
+                    <span class="gpa-rank">GPA: 3.92 | Magna Cum Laude</span>
+                </div>
+                <ul class="item-details">
+                    <li><strong>Honors:</strong> University Honors (Burnett Honors College)</li>
+                    <li><strong>Leadership:</strong> Public Relations Officer, ASL Knights (American Sign Language club), managing strategic outreach and community engagement</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 3. Legal Experience section -->
+        <section class="resume-section">
+            <h2 class="section-header">Legal Experience</h2>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="org-name">Trenam Law</h3>
+                    <span class="item-date">Upcoming Summer 2027</span>
+                </div>
+                <div class="item-subheader">
+                    <span class="role-title">Incoming Summer Associate</span>
+                    <span>Tampa, FL</span>
+                </div>
+                <ul class="item-details">
+                    <li>Accepted 10-week summer program offer (May 24 – July 30, 2027) with primary practice rotation in the Bankruptcy &amp; Creditors' Rights group.</li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="org-name">United States Bankruptcy Court (SDFL)</h3>
+                    <span class="item-date">June 2026 – July 2026</span>
+                </div>
+                <div class="item-subheader">
+                    <span class="role-title">Judicial Intern to the Honorable Mindy A. Mora</span>
+                    <span>West Palm Beach, FL</span>
+                </div>
+                <ul class="item-details">
+                    <li>Attended and analyzed court hearings, motions, and status conferences, discussing judicial decisions and reasoning directly with Judge Mora and law clerks.</li>
+                    <li>Presented a mock oral argument in front of Judge Mora.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 4. Marketing Experience section -->
+        <section class="resume-section">
+            <h2 class="section-header">Marketing &amp; Communications Experience</h2>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="org-name">Climate First Bank</h3>
+                    <span class="item-date">June 2023 – July 2025</span>
+                </div>
+                <div class="item-subheader">
+                    <span class="role-title">Marketing Assistant</span>
+                    <span>Winter Park, FL</span>
+                </div>
+                <ul class="item-details">
+                    <li>Managed digital presence and multiple social media channels, writing engaging blog posts and web copy.</li>
+                    <li>Captured corporate milestones and outreach programs via professional photography and videography.</li>
+                    <li>Analyzed user engagement metrics and demographic trends to optimize content performance and foster audience growth.</li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="org-name">UCF Burnett Honors College</h3>
+                    <span class="item-date">August 2022 – November 2023</span>
+                </div>
+                <div class="item-subheader">
+                    <span class="role-title">Marketing Assistant</span>
+                    <span>Orlando, FL</span>
+                </div>
+                <ul class="item-details">
+                    <li>Produced, filmed, and edited promotional videos to engage current students and attract prospective applicants.</li>
+                    <li>Photographed campus activities and tracked audience metrics across digital communication channels.</li>
+                    <li>Conducted interviews with student ambassadors to create compelling profile and promotional materials.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 5. High School Leadership & Honors section -->
+        <section class="resume-section">
+            <h2 class="section-header">Early Leadership &amp; Honors</h2>
+
+            <div class="resume-item">
+                <div class="item-header">
+                    <h3 class="org-name">Jupiter High School</h3>
+                    <span class="item-date">Graduated May 2022</span>
+                </div>
+                <div class="item-subheader">
+                    <span class="role-title">Selected Student Achievements</span>
+                    <span>Jupiter, FL</span>
+                </div>
+                <ul class="item-details">
+                    <li><strong>Managing Editor, <a href="https://jupiterwarcry.com/" target="_blank" class="profile-link">Jupiter War Cry</a> (Student Newspaper):</strong> Guided editorial policies, managed staff, and wrote articles during senior year.</li>
+                    <li><strong>News Anchor, Jupiter High Student News:</strong> Anchored daily school-wide news broadcasts across a four-year tenure.</li>
+                    <li><strong>Pathfinder Award Nominee in Communications:</strong> Nominated by school faculty to represent Jupiter High School for the prestigious Palm Beach Post county-wide scholarship.</li>
+                    <li><strong>First Place in Screenwriting, Student Showcase of Films:</strong> Won first place in the screenplay category for the screenplay, <em>An Odorless Ordeal</em> (April 2019).</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 6. Interests section -->
+        <section class="resume-section">
+            <h2 class="section-header">Interests</h2>
+            <div class="interests-grid">
+                <div class="interest-card">
+                    <span class="interest-icon">🎸</span>
+                    <h3 class="interest-title">Guitar</h3>
+                </div>
+                <div class="interest-card">
+                    <span class="interest-icon">✍️</span>
+                    <h3 class="interest-title">Creative Writing</h3>
+                </div>
+                <div class="interest-card">
+                    <span class="interest-icon">📸</span>
+                    <h3 class="interest-title">Photography</h3>
+                </div>
+                <div class="interest-card">
+                    <span class="interest-icon">💪</span>
+                    <h3 class="interest-title">Fitness</h3>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; <span id="year"></span> dobuler.com. All rights reserved.
+        </footer>
+    </main>
+
+    <script>
+        // Set year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 1. Theme Toggle Logic
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeText = document.getElementById('themeText');
+        const htmlElement = document.documentElement;
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeText.textContent = "Light Mode";
+            } else {
+                htmlElement.setAttribute('data-theme', 'light');
+                themeText.textContent = "Night Mode";
+            }
+        });
+
+        // 2. Interactive Pronunciation Dropdown Panel (handles both desktop and mobile instances)
+        const ipaTriggers = document.querySelectorAll('.ipa-trigger');
+        const pronuncPanels = document.querySelectorAll('.pronunc-panel');
+
+        ipaTriggers.forEach((trigger, index) => {
+            const panel = pronuncPanels[index];
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = panel.classList.contains('open');
+                if (isOpen) {
+                    panel.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    trigger.querySelector('svg').style.transform = 'rotate(0deg)';
+                } else {
+                    // Close other panels first
+                    pronuncPanels.forEach((p, idx) => {
+                        if (idx !== index) {
+                            p.classList.remove('open');
+                            ipaTriggers[idx].setAttribute('aria-expanded', 'false');
+                            ipaTriggers[idx].querySelector('svg').style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    panel.classList.add('open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    trigger.querySelector('svg').style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Click outside panels closes them
+        document.addEventListener('click', (e) => {
+            pronuncPanels.forEach((panel, index) => {
+                const trigger = ipaTriggers[index];
+                if (!panel.contains(e.target) && e.target !== trigger && !trigger.contains(e.target)) {
+                    panel.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    trigger.querySelector('svg').style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // 3. Pronunciation Syllable Hovers
+        const syllables = document.querySelectorAll('.ipa-syllable');
+        const defaultExplain = 'IPA: <strong>/ˈdɑb.ju.lɚ/</strong>';
+
+        syllables.forEach(syllable => {
+            syllable.addEventListener('click', (e) => e.stopPropagation());
+            syllable.addEventListener('mouseenter', () => {
+                const syl = syllable.getAttribute('data-syllable');
+                const ex = syllable.getAttribute('data-example');
+                const parentPanel = syllable.closest('.panel-content');
+                const explain = parentPanel.querySelector('.ipa-explain');
+                explain.innerHTML = `<span style="color: var(--text-primary); font-weight: 700;">${syl}</span> as in <em>${ex}</em>`;
+            });
+            syllable.addEventListener('mouseleave', () => {
+                const parentPanel = syllable.closest('.panel-content');
+                const explain = parentPanel.querySelector('.ipa-explain');
+                explain.innerHTML = defaultExplain;
+            });
+        });
+
+        // 4. Speech Synthesis Audio Button
+        const audioBtns = document.querySelectorAll('.audio-btn');
+        let synth = window.speechSynthesis;
+
+        // Pronunciation audio speak
+        function speak(e) {
+            e.stopPropagation();
+            if (!synth) return;
+            
+            synth.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance("dob-you-ler");
+            utterance.rate = 0.82; 
+            utterance.pitch = 1.0;
+            
+            const voices = synth.getVoices();
+            const preferredVoice = voices.find(v => v.lang === 'en-US' && v.name.includes('Google')) ||
+                                   voices.find(v => v.lang.startsWith('en-US')) ||
+                                   voices.find(v => v.lang.startsWith('en-'));
+            
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
+
+            audioBtns.forEach(btn => btn.classList.add('playing'));
+
+            utterance.onend = () => audioBtns.forEach(btn => btn.classList.remove('playing'));
+            utterance.onerror = () => audioBtns.forEach(btn => btn.classList.remove('playing'));
+
+            synth.speak(utterance);
+        }
+
+        audioBtns.forEach(btn => {
+            btn.addEventListener('click', speak);
+        });
+
+        if (synth && synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = () => {};
+        }
+
+        // 5. 3D Business Card Tilt Animation on Mousemove (Desktop only)
+        const card = document.getElementById('businessCard');
+        
+        if (card) {
+            card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth > 768) {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardWidth = cardRect.width;
+                    const cardHeight = cardRect.height;
+                    
+                    const mouseX = e.clientX - cardRect.left;
+                    const mouseY = e.clientY - cardRect.top;
+                    
+                    const rotateX = ((mouseY / cardHeight) - 0.5) * -15; // Max tilt 15 degrees
+                    const rotateY = ((mouseX / cardWidth) - 0.5) * 15;
+                    
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            });
+        }
+
+        // 6. Mouse-based radial background glow motion (tracks cursor across the viewport)
+        const glow = document.querySelector('.glow-effect');
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            const moveX = (x - centerX) * 0.1;
+            const moveY = (y - centerY) * 0.1;
+            
+            glow.style.setProperty('--mouse-x', `${moveX}px`);
+            glow.style.setProperty('--mouse-y', `${moveY}px`);
+        });
+
+        // 7. Prevent theme/color transition animations during initial page layout
+        window.addEventListener('load', () => {
+            document.body.classList.remove('no-transition');
+        });
+    </script>
+</body>
+</html>

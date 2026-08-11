@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fall 2026 Sports Calendar</title>
+    <!-- Favicon (Elegant Bold "JD" - Pink and Green) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='96' height='96' x='2' y='2' rx='22' fill='%23ff007f' stroke='%2339ff14' stroke-width='4'/><text x='50%' y='58%' font-family='Georgia, serif' font-weight='bold' font-size='60' fill='%2339ff14' dominant-baseline='middle' text-anchor='middle'>JD</text></svg>">
+    <!-- Google Fonts: Press Start 2P for retro headers, Outfit for body readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* Retro Game Design Tokens */
+        :root {
+            --bg-dark: #070810;
+            --screen-bg: #121424;
+            --neon-green: #39ff14;
+            --neon-pink: #ff007f;
+            --neon-blue: #00ffff;
+            --neon-yellow: #ffff00;
+            --border-pixel: 4px solid #ffffff;
+            --font-retro: 'Press Start 2P', monospace;
+            --font-body: 'Outfit', sans-serif;
+            
+            /* Team Colors */
+            --color-dolphins: #00B5AD;
+            --color-marlins: #00A3E0;
+            --color-liverpool: #E6193C;
+            --color-heat: #FF007F; /* Miami Vice Hot Pink */
+            --color-panthers: #2C6BFF; /* Brighter Panthers Blue */
+            --color-ucf: #F4B41A; /* Brighter UCF Gold */
+            --color-uf: #FF5500; /* Gators Orange */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem 0.5rem;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Scanline Overlay for CRT feel */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.06),
+                rgba(0, 255, 0, 0.02),
+                rgba(0, 0, 255, 0.06)
+            );
+            background-size: 100% 4px, 6px 100%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .scanlines.hidden {
+            display: none;
+        }
+
+        /* Flicker Effect */
+        @keyframes crt-flicker {
+            0% { opacity: 0.99; }
+            50% { opacity: 0.97; }
+            100% { opacity: 0.99; }
+        }
+
+        /* Main Cabinet Container */
+        .arcade-cabinet {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #2b2b3a;
+            border: 4px solid #1c1c28;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 
+                        inset 0 0 10px rgba(255, 255, 255, 0.1);
+            padding: 0.75rem;
+            position: relative;
+            animation: crt-flicker 0.15s infinite;
+        }
+
+        @media (min-width: 768px) {
+            .arcade-cabinet {
+                border-width: 8px;
+                border-radius: 20px;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Top Header Board */
+        .scoreboard {
+            background-color: #000000;
+            border: 3px solid var(--neon-pink);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 768px) {
+            .scoreboard {
+                border-width: 4px;
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .scoreboard-title {
+            font-family: var(--font-retro);
+            font-size: clamp(0.5rem, 2vw, 0.85rem);
+            color: var(--neon-green);
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .scoreboard-meta {
+            font-family: var(--font-retro);
+            font-size: 0.55rem;
+            color: var(--neon-blue);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .scoreboard-meta {
+                font-size: 0.7rem;
+                gap: 1.5rem;
+            }
+        }
+
+        .clock-blinker {
+            animation: blink 1s infinite steps(1);
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Main Dashboard Grid */
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        #game-detail-panel {
+            order: 1;
+        }
+        #calendar-board {
+            order: 2;
+        }
+        #month-list-panel {
+            order: 3;
+        }
+
+
+        @media (min-width: 900px) {
+            .dashboard {
+                display: grid;
+                grid-template-columns: 2.2fr 1fr;
+                grid-template-rows: auto 1fr;
+                gap: 1.5rem;
+            }
+            #calendar-board {
+                grid-column: 1;
+                grid-row: 1 / span 2;
+            }
+            #game-detail-panel {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            #month-list-panel {
+                grid-column: 2;
+                grid-row: 2;
+            }
+        }
+
+        /* Control Panel (Filters) */
+        .control-panel {
+            background-color: var(--screen-bg);
+            border: 3px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 768px) {
+            .control-panel {
+                border-width: 4px;
+                padding: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .panel-header {
+            font-family: var(--font-retro);
+            font-size: 0.65rem;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .panel-header {
+                font-size: 0.8rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .selectors-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Retro Arcade Buttons */
+        .arcade-btn {
+            font-family: var(--font-retro);
+            font-size: 0.55rem;
+            color: #ffffff;
+            background: #191b2c;
+            border: 2px solid var(--team-color, #ffffff);
+            border-radius: 4px;
+            padding: 0.5rem 0.3rem;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            text-shadow: 1px 1px 0px #000;
+            box-shadow: 0 3px 0px var(--team-shadow, #888);
+            position: relative;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .arcade-btn {
+                font-size: 0.6rem;
+                border-width: 3px;
+                border-radius: 6px;
+                padding: 0.6rem 0.4rem;
+                box-shadow: 0 4px 0px var(--team-shadow, #888);
+            }
+        }
+
+        @media (min-width: 900px) {
+            .arcade-btn {
+                font-size: 0.6rem;
+                padding: 0.6rem 0.5rem;
+            }
+        }
+
+        .arcade-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0px var(--team-shadow, #888);
+        }
+
+        @media (min-width: 768px) {
+            .arcade-btn:active {
+                transform: translateY(3px);
+                box-shadow: 0 1px 0px var(--team-shadow, #888);
+            }
+        }
+
+        .arcade-btn.disabled {
+            filter: grayscale(0.8) brightness(0.6);
+            opacity: 0.5;
+            box-shadow: 0 1px 0px #333;
+            transform: translateY(2px);
+        }
+
+        .btn-badge {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--neon-green);
+            display: inline-block;
+        }
+
+        @media (min-width: 768px) {
+            .btn-badge {
+                width: 8px;
+                height: 8px;
+            }
+        }
+
+        .arcade-btn.disabled .btn-badge {
+            background-color: #ff0055;
+        }
+
+        /* Sound Deck */
+        .sound-deck {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .sound-btn {
+            background: #000000;
+            border: 2px solid var(--neon-green);
+            border-radius: 6px;
+            color: var(--neon-green);
+            font-family: var(--font-retro);
+            font-size: 0.5rem;
+            padding: 0.35rem 0.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            box-shadow: 0 0 5px rgba(57, 255, 20, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .sound-btn {
+                font-size: 0.55rem;
+                padding: 0.4rem 0.75rem;
+            }
+        }
+
+        .sound-btn:hover {
+            background: var(--neon-green);
+            color: #000000;
+        }
+
+        /* Calendar Card Container */
+        .calendar-section {
+            background-color: var(--screen-bg);
+            border: 3px solid var(--neon-green);
+            border-radius: 8px;
+            padding: 0.75rem;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-section {
+                border-width: 4px;
+                padding: 1.25rem;
+            }
+        }
+
+        /* Month Navigation */
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 0.4rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+        }
+
+        @media (min-width: 768px) {
+            .month-header {
+                margin-bottom: 1.25rem;
+                padding: 0.5rem;
+            }
+        }
+
+        .month-title {
+            font-family: var(--font-retro);
+            font-size: 0.7rem;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+            text-transform: uppercase;
+        }
+
+        @media (min-width: 768px) {
+            .month-title {
+                font-size: 0.8rem;
+            }
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 0.25rem 0.4rem;
+            font-family: var(--font-retro);
+            font-size: 0.7rem;
+            transition: all 0.1s ease;
+        }
+
+        @media (min-width: 768px) {
+            .nav-btn {
+                font-size: 0.8rem;
+            }
+        }
+
+        .nav-btn:hover {
+            color: var(--neon-green);
+            transform: scale(1.2);
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            margin-bottom: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-grid {
+                gap: 4px;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .weekday-label {
+            font-family: var(--font-retro);
+            font-size: 0.45rem;
+            color: var(--neon-blue);
+            text-align: center;
+            padding-bottom: 0.4rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .weekday-label {
+                font-size: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+        }
+
+        .calendar-day {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            aspect-ratio: 1;
+            padding: 0.15rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.15s ease;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-day {
+                padding: 0.25rem;
+            }
+        }
+
+        .calendar-day:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .calendar-day.empty {
+            background-color: transparent;
+            border-color: transparent;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .day-number {
+            font-family: var(--font-retro);
+            font-size: 0.45rem;
+            color: rgba(255, 255, 255, 0.4);
+            align-self: flex-start;
+        }
+
+        @media (min-width: 768px) {
+            .day-number {
+                font-size: 0.55rem;
+            }
+        }
+
+        .calendar-day.today {
+            border: 1.5px solid var(--neon-yellow);
+            background-color: rgba(255, 255, 0, 0.05);
+        }
+
+        @media (min-width: 768px) {
+            .calendar-day.today {
+                border-width: 2px;
+            }
+        }
+
+        .calendar-day.today .day-number {
+            color: var(--neon-yellow);
+        }
+
+        .day-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1px;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        /* Tiny Retro pixel team dots */
+        .day-badge {
+            width: 100%;
+            height: 6px;
+            font-size: 0.35rem;
+            font-family: var(--font-retro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-shadow: 1px 1px 0px #000;
+            border-radius: 1px;
+            font-weight: bold;
+            overflow: hidden;
+            line-height: 1;
+            text-align: center;
+        }
+
+        @media (min-width: 600px) {
+            .day-badge {
+                width: calc(50% - 1px);
+                height: 8px;
+                font-size: 0.4rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .day-badge {
+                height: 10px;
+                font-size: 0.45rem;
+                border-radius: 2px;
+            }
+        }
+
+        /* Sidebar Schedule & Event Details */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (min-width: 900px) {
+            .sidebar {
+                gap: 1.5rem;
+            }
+        }
+
+        .sidebar-panel {
+            background-color: var(--screen-bg);
+            border: 3px solid var(--neon-yellow);
+            border-radius: 8px;
+            padding: 0.75rem;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.15);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-panel {
+                border-width: 4px;
+                padding: 1.25rem;
+            }
+        }
+
+        .sidebar-title {
+            font-family: var(--font-retro);
+            font-size: 0.65rem;
+            color: var(--neon-yellow);
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-title {
+                font-size: 0.75rem;
+                margin-bottom: 0.8rem;
+            }
+        }
+
+        /* Game List */
+        .game-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .game-list {
+                gap: 0.75rem;
+                max-height: 380px;
+            }
+        }
+
+        .game-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .game-list::-webkit-scrollbar-track {
+            background: #191b2c;
+        }
+
+        .game-list::-webkit-scrollbar-thumb {
+            background: var(--neon-yellow);
+            border-radius: 3px;
+        }
+
+        .game-item {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+
+        @media (min-width: 768px) {
+            .game-item {
+                padding: 0.6rem;
+            }
+        }
+
+        .game-item:hover {
+            border-color: var(--neon-yellow);
+            background-color: rgba(255, 255, 255, 0.03);
+            transform: scale(1.01);
+        }
+
+        .game-item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .game-item-date {
+            font-family: var(--font-retro);
+            font-size: 0.45rem;
+            color: var(--neon-blue);
+        }
+
+        .game-item-type {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 1px 4px;
+            border-radius: 3px;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .game-item-match {
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        @media (min-width: 768px) {
+            .game-item-match {
+                font-size: 0.95rem;
+            }
+        }
+
+        .game-team-label {
+            font-family: var(--font-retro);
+            font-size: 0.5rem;
+            padding: 1px 3px;
+            border-radius: 2px;
+            color: white;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        @media (min-width: 768px) {
+            .game-team-label {
+                font-size: 0.55rem;
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+        }
+
+        .game-item-info {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Detail Modal / Panel */
+        .detail-panel {
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .detail-panel {
+                padding: 0.8rem;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        .detail-header {
+            font-family: var(--font-retro);
+            font-size: 0.55rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px rgba(255, 0, 127, 0.4);
+            margin-bottom: 0.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .detail-header {
+                font-size: 0.6rem;
+            }
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0;
+        }
+
+        .detail-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .detail-val {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* General Instructions Footer */
+        .footer-note {
+            margin-top: 1rem;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            font-family: var(--font-retro);
+            line-height: 1.6;
+        }
+
+        @media (min-width: 768px) {
+            .footer-note {
+                margin-top: 1.5rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        .footer-note a {
+            color: var(--neon-green);
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* Pixels illustration banner */
+        .pixel-banner {
+            display: flex;
+            justify-content: space-between;
+            height: 10px;
+            background-image: repeating-linear-gradient(45deg, var(--neon-green) 0px, var(--neon-green) 5px, transparent 5px, transparent 10px);
+            opacity: 0.3;
+            margin: 1rem 0 0.25rem 0;
+            border-radius: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .pixel-banner {
+                height: 16px;
+                background-image: repeating-linear-gradient(45deg, var(--neon-green) 0px, var(--neon-green) 10px, transparent 10px, transparent 20px);
+                margin: 1.5rem 0 0.5rem 0;
+            }
+        }
+
+        /* UF Home Game Highlights */
+        .calendar-day.uf-home-day {
+            border: 1.5px solid #FF8A00 !important;
+            background-color: rgba(255, 138, 0, 0.08) !important;
+            box-shadow: inset 0 0 6px rgba(255, 138, 0, 0.2);
+        }
+        .detail-panel.uf-home-detail {
+            border: 2px solid #FF8A00 !important;
+            background-color: rgba(255, 138, 0, 0.05) !important;
+            box-shadow: 0 0 10px rgba(255, 138, 0, 0.25);
+        }
+        .detail-panel.uf-home-detail .detail-header {
+            color: #FF8A00 !important;
+            text-shadow: 0 0 8px rgba(255, 138, 0, 0.6) !important;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 600px) {
+            .arcade-cabinet {
+                padding: 0.4rem;
+                border-width: 3px;
+                border-radius: 8px;
+            }
+            .scoreboard {
+                justify-content: center;
+                text-align: center;
+                padding: 0.5rem;
+            }
+            .scoreboard-title {
+                font-size: 0.65rem;
+            }
+            .panel-header {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            .sound-deck {
+                justify-content: center;
+                gap: 0.4rem;
+                width: 100%;
+            }
+            .sound-btn {
+                font-size: 0.45rem;
+                padding: 0.25rem 0.4rem;
+            }
+            .selectors-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.3rem;
+                width: 100%;
+            }
+            .arcade-btn {
+                font-size: 0.5rem;
+                padding: 0.5rem 0.3rem;
+                border-width: 1.5px;
+                border-radius: 3px;
+                box-shadow: 0 2px 0px var(--team-shadow, #888);
+                gap: 0.25rem;
+            }
+            .btn-badge {
+                width: 4px;
+                height: 4px;
+            }
+            .calendar-section {
+                padding: 0.5rem;
+                border-width: 2px;
+            }
+            .month-header {
+                justify-content: center;
+                gap: 1.5rem;
+                width: 100%;
+            }
+            .weekday-label {
+                font-size: 0.4rem;
+                padding-bottom: 0.25rem;
+            }
+            .day-number {
+                font-size: 0.4rem;
+            }
+            .calendar-day {
+                aspect-ratio: auto;
+                height: 42px;
+            }
+            .day-badge {
+                font-size: 0.3rem;
+                height: 6px;
+                border-radius: 1px;
+                width: 100%;
+            }
+            .month-title {
+                font-size: 0.6rem;
+                white-space: nowrap;
+            }
+            .nav-btn {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.4rem;
+            }
+            .sidebar {
+                align-items: center;
+                width: 100%;
+            }
+            .sidebar-panel {
+                padding: 0.5rem;
+                border-width: 2px;
+                width: 100%;
+                text-align: center;
+            }
+            .sidebar-title {
+                font-size: 0.6rem;
+                margin-bottom: 0.4rem;
+                text-align: center;
+            }
+            .detail-panel {
+                text-align: center;
+                align-items: center;
+            }
+            .detail-row {
+                justify-content: center;
+                gap: 0.5rem;
+                border-bottom: none;
+            }
+            .game-list {
+                width: 100%;
+            }
+            .game-item {
+                padding: 0.4rem;
+                align-items: center;
+                text-align: center;
+            }
+            .game-item-top {
+                justify-content: center;
+                gap: 0.5rem;
+                width: 100%;
+            }
+            .game-item-match {
+                font-size: 0.75rem;
+                justify-content: center;
+                width: 100%;
+            }
+            .game-item-info {
+                font-size: 0.65rem;
+                justify-content: center;
+                gap: 1rem;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scanlines hidden"></div>
+
+    <div class="arcade-cabinet">
+        <!-- Scoreboard / Header -->
+        <header class="scoreboard">
+            <h1 class="scoreboard-title">Fall 2026 Sports Calendar</h1>
+        </header>
+
+        <!-- Filters Board & Sound Deck -->
+        <section class="control-panel">
+            <div class="panel-header">
+                <span>TEAM SELECTORS</span>
+                
+                <!-- Chiptune Sound Deck -->
+                <div class="sound-deck">
+                    <button class="sound-btn" id="music-toggle" title="Toggle retro music loop">
+                        <span>📻 MUSIC: OFF</span>
+                    </button>
+                    <button class="sound-btn" id="sfx-toggle" title="Toggle game sound effects">
+                        <span>🔊 SFX: ON</span>
+                    </button>
+                    <button class="sound-btn" id="scanlines-toggle" title="Toggle CRT scanlines">
+                        <span>📺 CRT: OFF</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Team Selection Arcade Buttons -->
+            <div class="selectors-grid">
+                <button class="arcade-btn" data-team="UF" style="--team-color: var(--color-uf); --team-shadow: #b33c00;">
+                    <span class="btn-badge"></span>
+                    <span>GATORS</span>
+                </button>
+                <button class="arcade-btn" data-team="Marlins" style="--team-color: var(--color-marlins); --team-shadow: #006287;">
+                    <span class="btn-badge"></span>
+                    <span>MARLINS</span>
+                </button>
+                <button class="arcade-btn" data-team="Heat" style="--team-color: var(--color-heat); --team-shadow: #b30059;">
+                    <span class="btn-badge"></span>
+                    <span>HEAT</span>
+                </button>
+                <button class="arcade-btn" data-team="Dolphins" style="--team-color: var(--color-dolphins); --team-shadow: #006d68;">
+                    <span class="btn-badge"></span>
+                    <span>DOLPHINS</span>
+                </button>
+                <button class="arcade-btn" data-team="Panthers" style="--team-color: var(--color-panthers); --team-shadow: #003cb3;">
+                    <span class="btn-badge"></span>
+                    <span>PANTHERS</span>
+                </button>
+                <button class="arcade-btn" data-team="Liverpool" style="--team-color: var(--color-liverpool); --team-shadow: #99071c;">
+                    <span class="btn-badge"></span>
+                    <span>LIVERPOOL</span>
+                </button>
+                <button class="arcade-btn" data-team="UCF" style="--team-color: var(--color-ucf); --team-shadow: #8c6206;">
+                    <span class="btn-badge"></span>
+                    <span>KNIGHTS</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Body Grid: Calendar & Sidebar Info -->
+        <main class="dashboard">
+            <!-- Selected Game Card -->
+            <div class="sidebar-panel" id="game-detail-panel">
+                <div class="sidebar-title">GAME DETAIL</div>
+                <div id="game-detail-container">
+                    <div class="detail-panel">
+                        <p style="color: rgba(255,255,255,0.4); text-align: center; font-size: 0.75rem; font-family: var(--font-retro); padding: 1rem 0;">
+                            SELECT A DAY OR GAME
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Board -->
+            <section class="calendar-section" id="calendar-board">
+                <!-- Month Control -->
+                <div class="month-header">
+                    <button class="nav-btn" id="prev-month">◀</button>
+                    <div class="month-title" id="month-display">SEPTEMBER 2026</div>
+                    <button class="nav-btn" id="next-month">▶</button>
+                </div>
+
+                <!-- Days of Week labels -->
+                <div class="calendar-grid">
+                    <div class="weekday-label">MON</div>
+                    <div class="weekday-label">TUE</div>
+                    <div class="weekday-label">WED</div>
+                    <div class="weekday-label">THU</div>
+                    <div class="weekday-label">FRI</div>
+                    <div class="weekday-label">SAT</div>
+                    <div class="weekday-label">SUN</div>
+                </div>
+
+                <!-- Calendar Days Container -->
+                <div class="calendar-grid" id="calendar-days">
+                    <!-- Javascript generated days -->
+                </div>
+            </section>
+
+            <!-- Month Games List -->
+            <div class="sidebar-panel" id="month-list-panel" style="flex: 1;">
+                <div class="sidebar-title" id="list-title">GAMES IN SEPTEMBER</div>
+                <div class="game-list" id="sidebar-games-list">
+                    <!-- Javascript generated list -->
+                </div>
+            </div>
+        </main>
+
+        <div class="pixel-banner"></div>
+        <div class="footer-note">
+            Note: Miami Heat (NBA) 2026-27 schedule is expected in mid-August.
+        </div>
+    </div>
+
+
+
+    <script>
+        // Fall 2026 Full Sports Database
+        const GAMES = [
+            // UF Football
+            { date: '2026-09-05', time: 'TBA', opponent: 'FAU', team: 'UF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Season opener vs Florida Atlantic Owls in Gainesville.' },
+            { date: '2026-09-12', time: 'TBA', opponent: 'Campbell', team: 'UF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Non-conference home game in Gainesville.' },
+            { date: '2026-09-19', time: 'TBA', opponent: 'Auburn', team: 'UF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'SEC road trip to Auburn Tiger Stadium.' },
+            { date: '2026-09-26', time: 'TBA', opponent: 'Ole Miss', team: 'UF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Major SEC home clash vs Rebels.' },
+            { date: '2026-10-03', time: 'TBA', opponent: 'Missouri', team: 'UF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'SEC road trip to Columbia.' },
+            { date: '2026-10-10', time: 'TBA', opponent: 'South Carolina', team: 'UF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Home conference game in Gainesville.' },
+            { date: '2026-10-17', time: 'TBA', opponent: 'Texas', team: 'UF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'SEC road matchup against the Longhorns in Austin.' },
+            { date: '2026-10-31', time: 'TBA', opponent: 'Georgia', team: 'UF', type: 'Neutral', location: 'Atlanta, GA', sport: 'Football', channel: 'TBA', details: 'Traditional neutral site rivalry matchup in Atlanta.' },
+            { date: '2026-11-07', time: 'TBA', opponent: 'Oklahoma', team: 'UF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Huge home matchup hosting the Sooners.' },
+            { date: '2026-11-14', time: 'TBA', opponent: 'Kentucky', team: 'UF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'Road matchup at Lexington.' },
+            { date: '2026-11-21', time: 'TBA', opponent: 'Vanderbilt', team: 'UF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Final home game in Gainesville.' },
+            { date: '2026-11-27', time: 'TBA', opponent: 'Florida State', team: 'UF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'Traditional post-Thanksgiving rivalry in Tallahassee.' },
+
+            // UCF Football
+            { date: '2026-09-03', time: 'TBA', opponent: 'Bethune-Cookman', team: 'UCF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Thursday night season opener in Orlando.' },
+            { date: '2026-09-12', time: 'TBA', opponent: 'Pittsburgh', team: 'UCF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'Road trip to Pittsburgh.' },
+            { date: '2026-09-19', time: 'TBA', opponent: 'Georgia State', team: 'UCF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Home game in Orlando.' },
+            { date: '2026-09-26', time: 'TBA', opponent: 'TCU', team: 'UCF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Big 12 home conference matchup.' },
+            { date: '2026-10-03', time: 'TBA', opponent: 'Houston', team: 'UCF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'Big 12 road trip to Houston.' },
+            { date: '2026-10-10', time: 'TBA', opponent: 'Oklahoma State', team: 'UCF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'Big 12 road game in Stillwater.' },
+            { date: '2026-10-24', time: 'TBA', opponent: 'BYU', team: 'UCF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'UCF Homecoming Game in Orlando. UF has a bye week.' },
+            { date: '2026-10-30', time: 'TBA', opponent: 'Baylor', team: 'UCF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Friday night game in Orlando.' },
+            { date: '2026-11-07', time: 'TBA', opponent: 'Kansas', team: 'UCF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'Big 12 road trip.' },
+            { date: '2026-11-14', time: 'TBA', opponent: 'Arizona State', team: 'UCF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Big 12 home matchup.' },
+            { date: '2026-11-20', time: 'TBA', opponent: 'Iowa State', team: 'UCF', type: 'Home', sport: 'Football', channel: 'TBA', details: 'Friday night home matchup.' },
+            { date: '2026-11-28', time: 'TBA', opponent: 'Colorado', team: 'UCF', type: 'Away', sport: 'Football', channel: 'TBA', details: 'Big 12 regular season finale in Boulder.' },
+
+            // Dolphins (NFL)
+            { date: '2026-09-13', time: '4:25 PM', opponent: 'Raiders', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'Regular season opener in Las Vegas.' },
+            { date: '2026-09-20', time: '4:25 PM', opponent: '49ers', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'Tough road test in San Francisco.' },
+            { date: '2026-09-27', time: '1:00 PM', opponent: 'Chiefs', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'CBS', details: 'Home opener hosting Patrick Mahomes and the Chiefs.' },
+            { date: '2026-10-04', time: '1:00 PM', opponent: 'Vikings', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'FOX', details: 'Road trip to Minneapolis.' },
+            { date: '2026-10-11', time: '8:20 PM', opponent: 'Bengals', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'NBC', details: 'Sunday Night Football blockbuster at Hard Rock Stadium.' },
+            { date: '2026-10-25', time: '1:00 PM', opponent: 'Jets', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'AFC East division clash at MetLife Stadium.' },
+            { date: '2026-11-01', time: '1:00 PM', opponent: 'Bills', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'CBS', details: 'AFC East home showdown in Miami.' },
+            { date: '2026-11-08', time: '4:05 PM', opponent: 'Patriots', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'Divisional road trip to Foxborough.' },
+            { date: '2026-11-15', time: '1:00 PM', opponent: 'Jets', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'CBS', details: 'AFC East division clash in Miami.' },
+            { date: '2026-11-22', time: '4:25 PM', opponent: 'Colts', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'Road matchup in Indianapolis.' },
+            { date: '2026-11-26', time: '12:30 PM', opponent: 'Bills (Thanksgiving)', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'CBS', details: 'Thanksgiving Day national game hosting Buffalo.' },
+            { date: '2026-12-06', time: '4:05 PM', opponent: 'Broncos', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'CBS', details: 'December road test in Denver.' },
+            { date: '2026-12-13', time: '1:00 PM', opponent: 'Bears', team: 'Dolphins', type: 'Home', sport: 'Football', channel: 'FOX', details: 'Late-season home game hosting Chicago.' },
+            { date: '2026-12-20', time: '8:20 PM', opponent: 'Packers', team: 'Dolphins', type: 'Away', sport: 'Football', channel: 'NBC', details: 'Sunday Night Football at winter Lambeau Field.' },
+
+            // Marlins (MLB - August & September Full Schedule)
+            // August 2026
+            { date: '2026-08-01', time: '4:10 PM', opponent: 'Mets', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Division road matchup at Citi Field.' },
+            { date: '2026-08-02', time: '1:40 PM', opponent: 'Mets', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Series finale vs Mets in New York.' },
+            { date: '2026-08-04', time: '7:20 PM', opponent: 'Braves', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Division road trip opener at Truist Park.' },
+            { date: '2026-08-05', time: '7:20 PM', opponent: 'Braves', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Midweek road game vs Braves.' },
+            { date: '2026-08-06', time: '12:20 PM', opponent: 'Braves', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Day game series finale in Atlanta.' },
+            { date: '2026-08-07', time: '6:40 PM', opponent: 'Angels', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Homestand opener hosting Los Angeles Angels at loanDepot park.' },
+            { date: '2026-08-08', time: '4:10 PM', opponent: 'Angels', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Weekend matchup vs Angels. Back to School Kids Lunchbox giveaway.' },
+            { date: '2026-08-09', time: '1:40 PM', opponent: 'Angels', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Series finale vs Angels.' },
+            { date: '2026-08-11', time: '6:40 PM', opponent: 'Pirates', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Homestand series opener hosting Pittsburgh Pirates.' },
+            { date: '2026-08-12', time: '6:40 PM', opponent: 'Pirates', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Midweek night game hosting Pirates.' },
+            { date: '2026-08-13', time: '1:10 PM', opponent: 'Pirates', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Day game series finale vs Pirates.' },
+            { date: '2026-08-14', time: '6:40 PM', opponent: 'Reds', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Road trip opener at Great American Ball Park.' },
+            { date: '2026-08-15', time: '6:40 PM', opponent: 'Reds', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Weekend night game vs Reds in Cincinnati.' },
+            { date: '2026-08-16', time: '1:40 PM', opponent: 'Reds', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Sunday afternoon series finale vs Reds.' },
+            { date: '2026-08-18', time: '6:40 PM', opponent: 'Phillies', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Road series opener at Citizens Bank Park.' },
+            { date: '2026-08-19', time: '6:40 PM', opponent: 'Phillies', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Road game vs Phillies in Philadelphia.' },
+            { date: '2026-08-21', time: '6:40 PM', opponent: 'Nationals', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Divisional homestand opener vs Nationals.' },
+            { date: '2026-08-22', time: '4:10 PM', opponent: 'Nationals', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Harry Potter Night & Agustín "Gus Bus" Ramírez Bobblehead giveaway.' },
+            { date: '2026-08-23', time: '1:40 PM', opponent: 'Nationals', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Series finale vs Nationals.' },
+            { date: '2026-08-24', time: '6:40 PM', opponent: 'Red Sox', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Interleague homestand opener hosting Boston Red Sox.' },
+            { date: '2026-08-25', time: '6:40 PM', opponent: 'Red Sox', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Midweek clash hosting Boston Red Sox.' },
+            { date: '2026-08-26', time: '12:10 PM', opponent: 'Red Sox', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Day game series finale vs Red Sox.' },
+            { date: '2026-08-28', time: '6:45 PM', opponent: 'Nationals', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Division road series opener at Nationals Park.' },
+            { date: '2026-08-29', time: '4:05 PM', opponent: 'Nationals', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Weekend road game vs Nationals in Washington.' },
+            { date: '2026-08-30', time: '1:35 PM', opponent: 'Nationals', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Sunday afternoon series finale vs Nationals.' },
+            { date: '2026-08-31', time: '4:05 PM', opponent: 'Nationals', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Four-game road series wrap-up vs Nationals.' },
+            // September 2026
+            { date: '2026-09-04', time: '6:40 PM', opponent: 'Cubs', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'September homestand opener at loanDepot park.' },
+            { date: '2026-09-05', time: '4:10 PM', opponent: 'Cubs', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Weekend matchup in Miami.' },
+            { date: '2026-09-06', time: '1:40 PM', opponent: 'Cubs', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Sunday afternoon baseball.' },
+            { date: '2026-09-07', time: '6:40 PM', opponent: 'Mets', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Special Labor Day homestand game vs division rivals.' },
+            { date: '2026-09-08', time: '6:40 PM', opponent: 'Mets', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Midweek division battle in Miami.' },
+            { date: '2026-09-09', time: '12:10 PM', opponent: 'Mets', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Day game series finale.' },
+            { date: '2026-09-11', time: '6:40 PM', opponent: 'Dodgers', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'High-profile homestand game hosting Los Angeles Dodgers.' },
+            { date: '2026-09-12', time: '6:40 PM', opponent: 'Dodgers', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Saturday night clash vs Ohtani and Dodgers.' },
+            { date: '2026-09-13', time: '1:40 PM', opponent: 'Dodgers', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Dodgers series wrap-up.' },
+            { date: '2026-09-14', time: '9:40 PM', opponent: 'Diamondbacks', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Late-night road opener in Phoenix.' },
+            { date: '2026-09-15', time: '9:40 PM', opponent: 'Diamondbacks', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Midweek road game at Chase Field.' },
+            { date: '2026-09-16', time: '3:40 PM', opponent: 'Diamondbacks', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Day game road series finale.' },
+            { date: '2026-09-17', time: '7:40 PM', opponent: 'Twins', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Interleague road opener in Minneapolis.' },
+            { date: '2026-09-18', time: '7:40 PM', opponent: 'Twins', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Weekend road matchup at Target Field.' },
+            { date: '2026-09-19', time: '2:10 PM', opponent: 'Twins', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Road series finale in Minnesota.' },
+            { date: '2026-09-20', time: '2:20 PM', opponent: 'Cubs', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Road opener at historic Wrigley Field.' },
+            { date: '2026-09-21', time: '7:40 PM', opponent: 'Cubs', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Night game at Wrigley Field.' },
+            { date: '2026-09-22', time: '7:40 PM', opponent: 'Cubs', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Midweek night game in Chicago.' },
+            { date: '2026-09-23', time: '7:40 PM', opponent: 'Cubs', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Penultimate game of the road trip.' },
+            { date: '2026-09-24', time: '2:20 PM', opponent: 'Cubs', team: 'Marlins', type: 'Away', sport: 'Baseball', channel: 'Bally Sports', details: 'Day game road trip finale at Wrigley Field.' },
+            { date: '2026-09-25', time: '6:40 PM', opponent: 'Braves', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Final home series of the year vs Atlanta Braves.' },
+            { date: '2026-09-26', time: '4:10 PM', opponent: 'Braves', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'Penultimate regular season game.' },
+            { date: '2026-09-27', time: '1:40 PM', opponent: 'Braves', team: 'Marlins', type: 'Home', sport: 'Baseball', channel: 'Bally Sports', details: 'MLB regular season finale wrap-up.' },
+
+            // Liverpool (English Premier League)
+            { date: '2026-08-23', time: '11:30 AM', opponent: 'Newcastle', team: 'Liverpool', type: 'Away', sport: 'Soccer', channel: 'USA / Peacock', details: 'Premier League road trip to St. James Park.' },
+            { date: '2026-08-29', time: '7:30 AM', opponent: 'Nottingham Forest', team: 'Liverpool', type: 'Home', sport: 'Soccer', channel: 'USA / Peacock', details: 'EPL home clash at Anfield.' },
+            { date: '2026-09-05', time: '10:00 AM', opponent: 'Ipswich Town', team: 'Liverpool', type: 'Away', sport: 'Soccer', channel: 'USA / Peacock', details: 'Road match at Portman Road.' },
+            { date: '2026-09-12', time: '10:00 AM', opponent: 'Fulham', team: 'Liverpool', type: 'Home', sport: 'Soccer', channel: 'USA / Peacock', details: 'EPL matchday at Anfield.' },
+            { date: '2026-09-19', time: '10:00 AM', opponent: 'Bournemouth', team: 'Liverpool', type: 'Away', sport: 'Soccer', channel: 'USA / Peacock', details: 'EPL away trip.' },
+            { date: '2026-10-10', time: '12:30 PM', opponent: 'Manchester City', team: 'Liverpool', type: 'Home', sport: 'Soccer', channel: 'USA / Peacock', details: 'Huge heavyweight title clash at Anfield.' },
+            { date: '2026-10-17', time: '10:00 AM', opponent: 'Brentford', team: 'Liverpool', type: 'Away', sport: 'Soccer', channel: 'USA / Peacock', details: 'Road trip to West London.' },
+            { date: '2026-10-24', time: '10:00 AM', opponent: 'Brighton', team: 'Liverpool', type: 'Home', sport: 'Soccer', channel: 'USA / Peacock', details: 'EPL home match.' },
+            { date: '2026-10-31', time: '12:30 PM', opponent: 'Arsenal', team: 'Liverpool', type: 'Home', sport: 'Soccer', channel: 'USA / Peacock', details: 'Blockbuster Halloween clash at Anfield.' },
+            { date: '2026-11-07', time: '10:00 AM', opponent: 'Crystal Palace', team: 'Liverpool', type: 'Away', sport: 'Soccer', channel: 'USA / Peacock', details: 'London road trip to Selhurst Park.' },
+            { date: '2026-11-21', time: '12:30 PM', opponent: 'Manchester United', team: 'Liverpool', type: 'Home', sport: 'Soccer', channel: 'USA / Peacock', details: 'Historic North West Derby at Anfield.' },
+            { date: '2026-11-28', time: '7:30 AM', opponent: 'Everton', team: 'Liverpool', type: 'Away', sport: 'Soccer', channel: 'USA / Peacock', details: 'Merseyside Derby at Goodison Park.' },
+
+            // Florida Panthers (NHL)
+            { date: '2026-09-29', time: '5:00 PM', opponent: 'Carolina Hurricanes', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Carolina Hurricanes.' },
+            { date: '2026-10-01', time: '10:00 PM', opponent: 'San Jose Sharks', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at San Jose Sharks.' },
+            { date: '2026-10-04', time: '8:00 PM', opponent: 'Anaheim Ducks', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Anaheim Ducks.' },
+            { date: '2026-10-06', time: '10:30 PM', opponent: 'Los Angeles Kings', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Los Angeles Kings.' },
+            { date: '2026-10-10', time: '6:00 PM', opponent: 'Minnesota Wild', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Minnesota Wild at Amerant Bank Arena.' },
+            { date: '2026-10-12', time: '1:00 PM', opponent: 'Buffalo Sabres', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Buffalo Sabres.' },
+            { date: '2026-10-13', time: '6:15 PM', opponent: 'Columbus Blue Jackets', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Columbus Blue Jackets.' },
+            { date: '2026-10-15', time: '7:00 PM', opponent: 'Vancouver Canucks', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Vancouver Canucks at Amerant Bank Arena.' },
+            { date: '2026-10-17', time: '6:00 PM', opponent: 'Seattle Kraken', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Seattle Kraken at Amerant Bank Arena.' },
+            { date: '2026-10-21', time: '7:30 PM', opponent: 'Ottawa Senators', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Ottawa Senators.' },
+            { date: '2026-10-22', time: '7:00 PM', opponent: 'Pittsburgh Penguins', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Pittsburgh Penguins.' },
+            { date: '2026-10-25', time: '3:00 PM', opponent: 'Chicago Blackhawks', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Chicago Blackhawks.' },
+            { date: '2026-10-27', time: '8:00 PM', opponent: 'Winnipeg Jets', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Winnipeg Jets.' },
+            { date: '2026-10-30', time: '7:00 PM', opponent: 'Winnipeg Jets', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Winnipeg Jets at Amerant Bank Arena.' },
+            { date: '2026-11-02', time: '7:00 PM', opponent: 'Detroit Red Wings', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Detroit Red Wings at Amerant Bank Arena.' },
+            { date: '2026-11-04', time: '7:30 PM', opponent: 'Chicago Blackhawks', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Chicago Blackhawks at Amerant Bank Arena.' },
+            { date: '2026-11-07', time: '12:30 PM', opponent: 'Washington Capitals', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Washington Capitals.' },
+            { date: '2026-11-08', time: '1:00 PM', opponent: 'Boston Bruins', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Boston Bruins.' },
+            { date: '2026-11-10', time: '7:00 PM', opponent: 'Columbus Blue Jackets', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Columbus Blue Jackets.' },
+            { date: '2026-11-12', time: '7:00 PM', opponent: 'Detroit Red Wings', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Detroit Red Wings at Amerant Bank Arena.' },
+            { date: '2026-11-14', time: '7:00 PM', opponent: 'St. Louis Blues', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at St. Louis Blues.' },
+            { date: '2026-11-15', time: '8:00 PM', opponent: 'Dallas Stars', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Dallas Stars.' },
+            { date: '2026-11-17', time: '7:00 PM', opponent: 'Edmonton Oilers', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Edmonton Oilers at Amerant Bank Arena.' },
+            { date: '2026-11-21', time: '6:00 PM', opponent: 'Buffalo Sabres', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Buffalo Sabres at Amerant Bank Arena.' },
+            { date: '2026-11-25', time: '7:00 PM', opponent: 'Ottawa Senators', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Ottawa Senators at Amerant Bank Arena.' },
+            { date: '2026-11-27', time: '3:00 PM', opponent: 'Washington Capitals', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Washington Capitals.' },
+            { date: '2026-11-28', time: '6:00 PM', opponent: 'Tampa Bay Lightning', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Tampa Bay Lightning at Amerant Bank Arena.' },
+            { date: '2026-12-01', time: '7:00 PM', opponent: 'New York Islanders', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at New York Islanders.' },
+            { date: '2026-12-03', time: '7:00 PM', opponent: 'Toronto Maple Leafs', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Toronto Maple Leafs.' },
+            { date: '2026-12-05', time: '1:00 PM', opponent: 'Montreal Canadiens', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Montreal Canadiens.' },
+            { date: '2026-12-08', time: '7:00 PM', opponent: 'Boston Bruins', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Boston Bruins at Amerant Bank Arena.' },
+            { date: '2026-12-10', time: '7:00 PM', opponent: 'Pittsburgh Penguins', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Pittsburgh Penguins at Amerant Bank Arena.' },
+            { date: '2026-12-12', time: '7:00 PM', opponent: 'Detroit Red Wings', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Detroit Red Wings.' },
+            { date: '2026-12-14', time: '7:00 PM', opponent: 'Philadelphia Flyers', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Philadelphia Flyers.' },
+            { date: '2026-12-15', time: '7:00 PM', opponent: 'Boston Bruins', team: 'Panthers', type: 'Away', sport: 'Hockey', channel: 'TBA', details: 'Away matchup at Boston Bruins.' },
+            { date: '2026-12-19', time: '1:00 PM', opponent: 'Calgary Flames', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Calgary Flames at Amerant Bank Arena.' },
+            { date: '2026-12-21', time: '7:00 PM', opponent: 'St. Louis Blues', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs St. Louis Blues at Amerant Bank Arena.' },
+            { date: '2026-12-26', time: '6:00 PM', opponent: 'Tampa Bay Lightning', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Tampa Bay Lightning at Amerant Bank Arena.' },
+            { date: '2026-12-28', time: '7:00 PM', opponent: 'Nashville Predators', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Nashville Predators at Amerant Bank Arena.' },
+            { date: '2026-12-30', time: '7:00 PM', opponent: 'Buffalo Sabres', team: 'Panthers', type: 'Home', sport: 'Hockey', channel: 'TBA', details: 'Home game vs Buffalo Sabres at Amerant Bank Arena.' },
+
+            // Miami Heat (NBA - 2026-2027 Schedule Pending Release)
+        ];
+
+        // State variables
+        let currentDate = new Date(2026, 8, 1); // Starting Sept 2026
+        const disabledTeams = new Set();
+        let activeSelectedDayEl = null;
+
+        // Sound Engine (Web Audio API Synthesizer)
+        let audioCtx = null;
+        let masterVolume = null;
+        let melodyInterval = null;
+        let musicPlaying = false;
+        let sfxEnabled = true;
+
+        // Chiptune Song Notes (Midi values)
+        // High-energy fast driving arpeggios (upbeat 8-bit rock progression)
+        const melody = [
+            60, 64, 67, 72, 60, 64, 67, 72,
+            62, 66, 69, 74, 62, 66, 69, 74,
+            64, 67, 72, 76, 64, 67, 72, 76,
+            65, 69, 72, 77, 67, 71, 74, 79
+        ];
+        const bassline = [
+            48, 48, 48, 48, 48, 48, 48, 48,
+            50, 50, 50, 50, 50, 50, 50, 50,
+            52, 52, 52, 52, 52, 52, 52, 52,
+            53, 53, 53, 53, 55, 55, 55, 55
+        ];
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                masterVolume = audioCtx.createGain();
+                masterVolume.gain.value = 0.5; // Default volume set to 50%
+                masterVolume.connect(audioCtx.destination);
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Web Audio API Retro SFX Generators
+        function playCoinSound() {
+            if (!sfxEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = 'square';
+            osc.connect(gainNode);
+            gainNode.connect(masterVolume);
+            
+            osc.frequency.setValueAtTime(987.77, now); // B5
+            osc.frequency.setValueAtTime(1318.51, now + 0.08); // E6
+            
+            gainNode.gain.setValueAtTime(0.15, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+            
+            osc.start(now);
+            osc.stop(now + 0.35);
+        }
+
+        function playBlipSound() {
+            if (!sfxEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = 'square';
+            osc.connect(gainNode);
+            gainNode.connect(masterVolume);
+            
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(150, now + 0.12);
+            
+            gainNode.gain.setValueAtTime(0.1, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+            
+            osc.start(now);
+            osc.stop(now + 0.12);
+        }
+
+        function playPowerDownSound() {
+            if (!sfxEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = 'sawtooth';
+            osc.connect(gainNode);
+            gainNode.connect(masterVolume);
+            
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.linearRampToValueAtTime(100, now + 0.4);
+            
+            gainNode.gain.setValueAtTime(0.15, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            
+            osc.start(now);
+            osc.stop(now + 0.4);
+        }
+
+        // Snare drum noise generator
+        function playSnareDrum(startTime) {
+            if (!sfxEnabled || !audioCtx) return;
+            const bufferSize = audioCtx.sampleRate * 0.08; // 80ms duration
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+            
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'highpass';
+            filter.frequency.value = 1000;
+            
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.setValueAtTime(0.02, startTime); // Quiet snare beats
+            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + 0.07);
+            
+            noise.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(masterVolume);
+            
+            noise.start(startTime);
+            noise.stop(startTime + 0.08);
+        }
+
+        // Play note helper
+        function playChiptuneNote(midiNum, duration, startTime, waveType = 'square') {
+            if (midiNum === 0) return;
+            const freq = Math.pow(2, (midiNum - 69) / 12) * 440;
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = waveType;
+            osc.frequency.value = freq;
+            
+            osc.connect(gainNode);
+            gainNode.connect(masterVolume);
+            
+            gainNode.gain.setValueAtTime(waveType === 'square' ? 0.05 : 0.08, startTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration - 0.02);
+            
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+        }
+
+        function startMusic() {
+            initAudio();
+            let noteIdx = 0;
+            const tempoFactor = 0.15; // Fast tempo factor (approx 100 BPM 16th arpeggios)
+            
+            melodyInterval = setInterval(() => {
+                if (!musicPlaying) return;
+                const now = audioCtx.currentTime;
+                
+                // Play fast melody arpeggio (square wave)
+                playChiptuneNote(melody[noteIdx], tempoFactor, now, 'square');
+                
+                // Play bass chord changes (triangle wave)
+                playChiptuneNote(bassline[noteIdx], tempoFactor, now, 'triangle');
+                
+                // Add noise-synthesized snare drum hits on beats 2 and 4 (every 4th step)
+                if (noteIdx % 4 === 2) {
+                    playSnareDrum(now);
+                }
+                
+                noteIdx = (noteIdx + 1) % melody.length;
+            }, tempoFactor * 1000);
+            
+            musicPlaying = true;
+            document.getElementById('music-toggle').innerHTML = '📻 MUSIC: ON';
+        }
+
+        function stopMusic() {
+            if (melodyInterval) {
+                clearInterval(melodyInterval);
+                melodyInterval = null;
+            }
+            musicPlaying = false;
+            document.getElementById('music-toggle').innerHTML = '📻 MUSIC: OFF';
+        }
+
+        // Toggle Audio controls
+        document.getElementById('music-toggle').addEventListener('click', () => {
+            if (musicPlaying) {
+                stopMusic();
+                playBlipSound();
+            } else {
+                startMusic();
+                playCoinSound();
+            }
+        });
+
+        document.getElementById('sfx-toggle').addEventListener('click', () => {
+            sfxEnabled = !sfxEnabled;
+            document.getElementById('sfx-toggle').innerHTML = sfxEnabled ? '🔊 SFX: ON' : '🔇 SFX: OFF';
+            if (sfxEnabled) {
+                playCoinSound();
+            }
+        });
+
+        // Scanlines CRT Toggle
+        document.getElementById('scanlines-toggle').addEventListener('click', () => {
+            const scanlinesEl = document.querySelector('.scanlines');
+            const btnSpan = document.querySelector('#scanlines-toggle span');
+            if (scanlinesEl.classList.contains('hidden')) {
+                scanlinesEl.classList.remove('hidden');
+                btnSpan.textContent = '📺 CRT: ON';
+                playCoinSound();
+            } else {
+                scanlinesEl.classList.add('hidden');
+                btnSpan.textContent = '📺 CRT: OFF';
+                playBlipSound();
+            }
+        });
+
+        // Blinking colon and real clock updates
+        setInterval(() => {
+            const clockEl = document.getElementById('board-clock');
+            if (clockEl) {
+                const now = new Date();
+                let hrs = now.getHours();
+                let mins = now.getMinutes();
+                hrs = hrs < 10 ? '0' + hrs : hrs;
+                mins = mins < 10 ? '0' + mins : mins;
+                clockEl.textContent = `${hrs}:${mins}`;
+            }
+        }, 1000);
+
+        // Core Calendar Logic
+        const MONTH_NAMES = [
+            "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+            "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+        ];
+
+        // Teams helper configuration
+        const TEAM_CONFIG = {
+            'UF': { abbr: 'UF', name: 'Gators', color: 'var(--color-uf)' },
+            'UCF': { abbr: 'UCF', name: 'Knights', color: 'var(--color-ucf)' },
+            'Dolphins': { abbr: 'MIA', name: 'Dolphins', color: 'var(--color-dolphins)' },
+            'Marlins': { abbr: 'MAR', name: 'Marlins', color: 'var(--color-marlins)' },
+            'Liverpool': { abbr: 'LIV', name: 'Liverpool', color: 'var(--color-liverpool)' },
+            'Heat': { abbr: 'MIA', name: 'Heat', color: 'var(--color-heat)' },
+            'Panthers': { abbr: 'PAN', name: 'Panthers', color: 'var(--color-panthers)' }
+        };
+
+        // Jainil Mode Easter Egg Check
+        function checkJainilEasterEgg() {
+            // Checked if UCF is disabled and all other teams are active
+            const ucfDisabled = disabledTeams.has('UCF');
+            const keys = Object.keys(TEAM_CONFIG);
+            const othersEnabled = keys.every(key => {
+                if (key === 'UCF') return true;
+                return !disabledTeams.has(key);
+            });
+
+            const titleEl = document.querySelector('.scoreboard-title');
+            if (ucfDisabled && othersEnabled) {
+                // Easter egg active!
+                titleEl.textContent = "JAINIL MODE";
+                titleEl.style.color = "var(--neon-pink)";
+                titleEl.style.textShadow = "0 0 10px rgba(255, 0, 127, 0.8)";
+                playPowerDownSound();
+                
+                // Audio speech easter egg vocal
+                if (sfxEnabled && window.speechSynthesis) {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance("Jainil Mode Activated!");
+                    utterance.rate = 1.05;
+                    utterance.pitch = 0.9;
+                    window.speechSynthesis.speak(utterance);
+                }
+            } else {
+                // Reset to standard header
+                titleEl.textContent = "Fall 2026 Sports Calendar";
+                titleEl.style.color = "var(--neon-green)";
+                titleEl.style.textShadow = "0 0 8px rgba(57, 255, 20, 0.6)";
+            }
+        }
+
+        // Filter functions
+        const teamButtons = document.querySelectorAll('.arcade-btn');
+        teamButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const team = btn.getAttribute('data-team');
+                if (disabledTeams.has(team)) {
+                    disabledTeams.delete(team);
+                    btn.classList.remove('disabled');
+                    playCoinSound();
+                } else {
+                    disabledTeams.add(team);
+                    btn.classList.add('disabled');
+                    playCoinSound();
+                }
+                checkJainilEasterEgg();
+                renderCalendar();
+                renderSidebarList();
+            });
+        });
+
+        // Time sorting helper: converts a time string to minutes from start of day, putting TBA last
+        function parseTimeToMinutes(timeStr) {
+            if (!timeStr || timeStr === 'TBA') {
+                return 99999; // Put TBAs last
+            }
+            const match = timeStr.match(/^(\d+):(\d+)\s*(AM|PM)$/i);
+            if (!match) {
+                return 99999;
+            }
+            let hours = parseInt(match[1]);
+            const minutes = parseInt(match[2]);
+            const ampm = match[3].toUpperCase();
+            
+            if (ampm === 'PM' && hours < 12) {
+                hours += 12;
+            } else if (ampm === 'AM' && hours === 12) {
+                hours = 0;
+            }
+            
+            return hours * 60 + minutes;
+        }
+
+        // Month Navigation Event Listeners
+        document.getElementById('prev-month').addEventListener('click', () => {
+            // Clamp to Fall 2026 (August to December)
+            if (currentDate.getMonth() > 7 || currentDate.getFullYear() > 2026) {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                playCoinSound();
+                renderCalendar();
+                renderSidebarList();
+            }
+        });
+
+        document.getElementById('next-month').addEventListener('click', () => {
+            // Clamp to Fall 2026 (August to December)
+            if (currentDate.getMonth() < 11 || currentDate.getFullYear() < 2026) {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                playCoinSound();
+                renderCalendar();
+                renderSidebarList();
+            }
+        });
+
+        // Render Calendar Grid
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            // Set Month Title
+            document.getElementById('month-display').textContent = `${MONTH_NAMES[month]} ${year}`;
+
+            const daysContainer = document.getElementById('calendar-days');
+            daysContainer.innerHTML = '';
+
+            // Get first day of month index and number of days (adjusted for Monday start)
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const emptyCellsCount = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+            const totalDays = new Date(year, month + 1, 0).getDate();
+
+            // Render empty cells for padding
+            for (let i = 0; i < emptyCellsCount; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-day empty';
+                daysContainer.appendChild(emptyCell);
+            }
+
+            // Render days
+            for (let day = 1; day <= totalDays; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                // Today highlight check
+                if (year === 2026 && month === 6 && day === 18) {
+                    dayCell.classList.add('today');
+                }
+
+                // Add day number
+                const dayNum = document.createElement('span');
+                dayNum.className = 'day-number';
+                dayNum.textContent = day;
+                dayCell.appendChild(dayNum);
+
+                // Find active games on this date
+                const activeGamesOnDay = GAMES.filter(game => {
+                    return game.date === dateStr && !disabledTeams.has(game.team);
+                });
+
+                // Highlight UF Home games
+                const hasUfHomeGame = activeGamesOnDay.some(game => game.team === 'UF' && game.type === 'Home');
+                if (hasUfHomeGame) {
+                    dayCell.classList.add('uf-home-day');
+                }
+
+                // Add pixel badges for games
+                if (activeGamesOnDay.length > 0) {
+                    const badgesContainer = document.createElement('div');
+                    badgesContainer.className = 'day-badges';
+
+                    activeGamesOnDay.forEach(game => {
+                        const badge = document.createElement('div');
+                        badge.className = 'day-badge';
+                        badge.style.backgroundColor = TEAM_CONFIG[game.team].color;
+                        badge.textContent = TEAM_CONFIG[game.team].abbr;
+                        badge.title = `${TEAM_CONFIG[game.team].name} vs ${game.opponent}`;
+                        badgesContainer.appendChild(badge);
+                    });
+
+                    dayCell.appendChild(badgesContainer);
+                }
+
+                // Click event on day
+                dayCell.addEventListener('click', () => {
+                    playCoinSound();
+                    
+                    // Highlight active day element
+                    if (activeSelectedDayEl) {
+                        activeSelectedDayEl.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                    }
+                    dayCell.style.borderColor = 'var(--neon-pink)';
+                    activeSelectedDayEl = dayCell;
+
+                    showGameDetails(dateStr, activeGamesOnDay);
+                });
+
+                daysContainer.appendChild(dayCell);
+            }
+        }
+
+        // Show detailed game info
+        function showGameDetails(dateStr, games) {
+            const container = document.getElementById('game-detail-container');
+            container.innerHTML = '';
+
+            const dateFormatted = new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
+                weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+            });
+
+            if (games.length === 0) {
+                container.innerHTML = `
+                    <div class="detail-panel">
+                        <div class="detail-header" style="text-align: center;">${dateFormatted}</div>
+                        <p style="color: rgba(255,255,255,0.4); text-align: center; font-size: 0.75rem; padding: 1rem 0;">
+                            NO ACTIVE GAMES TODAY
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort games on the clicked day: UF Home games go to the top, then sort by time chronologically
+            const sortedGamesOnDay = [...games].sort((a, b) => {
+                const aIsUfHome = (a.team === 'UF' && a.type === 'Home');
+                const bIsUfHome = (b.team === 'UF' && b.type === 'Home');
+                if (aIsUfHome && !bIsUfHome) return -1;
+                if (!aIsUfHome && bIsUfHome) return 1;
+                return parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time);
+            });
+
+            sortedGamesOnDay.forEach((game, index) => {
+                const gameDiv = document.createElement('div');
+                gameDiv.className = 'detail-panel';
+                if (index > 0) gameDiv.style.marginTop = '1rem';
+
+                const isUfHome = (game.team === 'UF' && game.type === 'Home');
+                if (isUfHome) {
+                    gameDiv.classList.add('uf-home-detail');
+                }
+
+                const header = document.createElement('div');
+                header.className = 'detail-header';
+                if (isUfHome) {
+                    header.textContent = `★ ${TEAM_CONFIG[game.team].name.toUpperCase()} (HOME) ★`;
+                } else {
+                    header.textContent = `${TEAM_CONFIG[game.team].name.toUpperCase()}`;
+                }
+                gameDiv.appendChild(header);
+
+                const table = [
+                    { label: 'Date', val: dateFormatted },
+                    { label: 'Opponent', val: game.opponent },
+                    { label: 'Format', val: `${game.sport} (${game.type})` },
+                    { label: 'Kickoff/Start', val: game.time },
+                    { label: 'Broadcast', val: game.channel }
+                ];
+
+                table.forEach(row => {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'detail-row';
+                    rowDiv.innerHTML = `
+                        <span class="detail-label">${row.label}</span>
+                        <span class="detail-val" style="${row.label === 'Opponent' ? 'color: var(--neon-yellow)' : ''}">${row.val}</span>
+                    `;
+                    gameDiv.appendChild(rowDiv);
+                });
+
+                if (game.details) {
+                    const descDiv = document.createElement('div');
+                    descDiv.style.fontSize = '0.75rem';
+                    descDiv.style.marginTop = '0.5rem';
+                    descDiv.style.color = '#ccc';
+                    descDiv.innerHTML = `<span style="color: var(--neon-blue); font-family: var(--font-retro); font-size: 0.55rem; display:block; margin-bottom: 2px;">RECON:</span> ${game.details}`;
+                    gameDiv.appendChild(descDiv);
+                }
+
+                container.appendChild(gameDiv);
+            });
+        }
+
+        // Render Sidebar Monthly list (Sorted chronologically by day, with TBAs last)
+        function renderSidebarList() {
+            const month = currentDate.getMonth();
+            const listContainer = document.getElementById('sidebar-games-list');
+            listContainer.innerHTML = '';
+
+            document.getElementById('list-title').textContent = `GAMES IN ${MONTH_NAMES[month]}`;
+
+            // Get games in selected month that are not filtered out, sorted by date first, then by time (TBA last)
+            const monthGames = GAMES.filter(game => {
+                const gameDate = new Date(game.date + 'T00:00:00');
+                return gameDate.getMonth() === month && !disabledTeams.has(game.team);
+            }).sort((a, b) => {
+                const dateDiff = new Date(a.date) - new Date(b.date);
+                if (dateDiff !== 0) return dateDiff;
+                return parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time);
+            });
+
+            if (monthGames.length === 0) {
+                listContainer.innerHTML = `
+                    <p style="color: rgba(255,255,255,0.4); text-align: center; font-size: 0.75rem; padding: 2rem 0; font-family: var(--font-retro);">
+                        NO ACTIVE GAMES THIS MONTH
+                    </p>
+                `;
+                return;
+            }
+
+            monthGames.forEach(game => {
+                const dateObj = new Date(game.date + 'T00:00:00');
+                const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', weekday: 'short' });
+
+                const item = document.createElement('div');
+                item.className = 'game-item';
+                item.innerHTML = `
+                    <div class="game-item-top">
+                        <span class="game-item-date">${dateStr.toUpperCase()}</span>
+                        <span class="game-item-type">${game.type}</span>
+                    </div>
+                    <div class="game-item-match">
+                        <span class="game-team-label" style="background-color: ${TEAM_CONFIG[game.team].color}">${TEAM_CONFIG[game.team].abbr}</span>
+                        <span>vs ${game.opponent}</span>
+                    </div>
+                    <div class="game-item-info">
+                        <span>${game.time}</span>
+                        <span style="color: var(--neon-yellow)">${game.channel}</span>
+                    </div>
+                `;
+
+                item.addEventListener('click', () => {
+                    playCoinSound();
+                    
+                    // Highlight matching date in calendar
+                    const dayNum = dateObj.getDate();
+                    const dayCells = document.querySelectorAll('.calendar-day:not(.empty)');
+                    dayCells.forEach(cell => {
+                        if (parseInt(cell.querySelector('.day-number').textContent) === dayNum) {
+                            if (activeSelectedDayEl) {
+                                activeSelectedDayEl.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                            }
+                            cell.style.borderColor = 'var(--neon-pink)';
+                            activeSelectedDayEl = cell;
+                        }
+                    });
+
+                    // Trigger scout panel display
+                    const dateFullStr = game.date;
+                    const gamesOnDay = GAMES.filter(g => g.date === dateFullStr && !disabledTeams.has(g.team));
+                    showGameDetails(dateFullStr, gamesOnDay);
+                });
+
+                listContainer.appendChild(item);
+            });
+        }
+
+        // Initialize display
+        renderCalendar();
+        renderSidebarList();
+    </script>
+</body>
+</html>
