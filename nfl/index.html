@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ESPN — NATIONAL FRIENDSHIP LEAGUE 2026 SCHEDULE</title>
+<link rel="icon" type="image/x-icon" href="https://a.espncdn.com/favicon.ico">
+<link rel="shortcut icon" href="https://a.espncdn.com/favicon.ico">
+<script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #0e1015;
+    color: #e2e8f0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .font-espn {
+    font-family: 'Montserrat', sans-serif;
+  }
+  .espn-red {
+    background-color: #d0021b;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .week-section {
+    scroll-margin-top: 120px;
+  }
+</style>
+</head>
+<body class="min-h-screen pb-16">
+
+<!-- ESPN Global Top Header -->
+<header class="bg-[#12141a] border-b border-[#222733] sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
+    <!-- Brand Logo & Title -->
+    <div class="flex items-center space-x-2.5">
+      <div class="espn-red text-white font-espn font-black text-lg sm:text-xl px-2 sm:px-2.5 py-0.5 rounded tracking-tighter italic">
+        ESPN
+      </div>
+      <div class="h-4 w-px bg-gray-700"></div>
+      <div class="flex items-center space-x-1.5 sm:space-x-2">
+        <span class="font-espn font-extrabold text-xs sm:text-sm uppercase tracking-wider text-white">Fantasy</span>
+        <span class="bg-[#222733] text-gray-400 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-[#2d3446]">2026</span>
+      </div>
+    </div>
+
+    <!-- Right Header Info -->
+    <div class="flex items-center space-x-3 text-xs font-semibold text-gray-400">
+      <span class="text-white font-bold hidden sm:inline">National Friendship League</span>
+      <span class="hidden sm:inline">•</span>
+      <span class="text-gray-300 font-bold">14 Weeks</span>
+    </div>
+  </div>
+</header>
+
+<!-- ESPN Sub-Header / League Banner & Live Draft Countdown -->
+<div class="bg-gradient-to-r from-[#171a23] via-[#1c212d] to-[#171a23] border-b border-[#262c3d] py-5 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+    <!-- Title & Subtitle -->
+    <div>
+      <h1 class="text-xl sm:text-3xl lg:text-4xl font-espn font-black tracking-tight text-white uppercase italic leading-tight">
+        NATIONAL FRIENDSHIP LEAGUE 2026 SCHEDULE
+      </h1>
+      <p class="text-xs sm:text-sm text-gray-400 mt-1 max-w-2xl">
+        Continuous 14-week schedule. Tap any week button to jump instantly or scroll down.
+      </p>
+    </div>
+
+    <!-- Live Draft Countdown Timer Box -->
+    <div class="bg-[#101219] border border-[#272e42] p-3.5 sm:p-4 rounded-2xl shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+      <div>
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          <span class="font-espn font-extrabold text-[10px] sm:text-xs text-red-500 uppercase tracking-widest">OFFICIAL LEAGUE DRAFT</span>
+        </div>
+        <div class="text-xs font-semibold text-gray-300 mt-0.5">
+          Sun, Sep 6, 2026 @ 3:00 PM EDT
+        </div>
+      </div>
+
+      <!-- Live Digital Clock Display -->
+      <div class="flex items-center space-x-1.5 sm:space-x-2 font-espn text-center">
+        <!-- Days -->
+        <div class="bg-[#181d28] border border-[#2b334a] rounded-xl px-2.5 py-1.5 min-w-[50px]">
+          <div id="draft-days" class="text-lg sm:text-xl font-black text-white">--</div>
+          <div class="text-[8px] font-bold text-gray-400 uppercase tracking-wider">DAYS</div>
+        </div>
+        <span class="text-gray-500 font-bold text-sm">:</span>
+        <!-- Hours -->
+        <div class="bg-[#181d28] border border-[#2b334a] rounded-xl px-2.5 py-1.5 min-w-[50px]">
+          <div id="draft-hours" class="text-lg sm:text-xl font-black text-white">--</div>
+          <div class="text-[8px] font-bold text-gray-400 uppercase tracking-wider">HRS</div>
+        </div>
+        <span class="text-gray-500 font-bold text-sm">:</span>
+        <!-- Minutes -->
+        <div class="bg-[#181d28] border border-[#2b334a] rounded-xl px-2.5 py-1.5 min-w-[50px]">
+          <div id="draft-mins" class="text-lg sm:text-xl font-black text-white">--</div>
+          <div class="text-[8px] font-bold text-gray-400 uppercase tracking-wider">MINS</div>
+        </div>
+        <span class="text-gray-500 font-bold text-sm">:</span>
+        <!-- Seconds -->
+        <div class="bg-[#181d28] border border-[#2b334a] rounded-xl px-2.5 py-1.5 min-w-[50px]">
+          <div id="draft-secs" class="text-lg sm:text-xl font-black text-red-500">--</div>
+          <div class="text-[8px] font-bold text-gray-400 uppercase tracking-wider">SECS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ESPN Week Navigation Bar & Filter Bar -->
+<div class="bg-[#12151d] border-b border-[#222735] sticky top-14 z-40 shadow-lg">
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-2">
+    <!-- Week Jump Tabs -->
+    <div class="flex items-center space-x-1.5 sm:space-x-2 overflow-x-auto scrollbar-none py-1 touch-pan-x" id="week-tabs">
+      <!-- Tabs generated via JavaScript -->
+    </div>
+
+    <!-- Manager Search / Filter Dropdown -->
+    <div class="flex items-center space-x-2 bg-[#111319] border border-[#2a3144] px-2.5 py-1.5 rounded-xl shrink-0">
+      <svg class="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+      <select id="manager-filter" onchange="renderSchedule()" class="bg-transparent text-white text-xs font-semibold focus:outline-none cursor-pointer pr-2">
+        <option value="ALL" class="bg-[#171a23] text-white">All Teams</option>
+        <option value="Jason" class="bg-[#171a23]">Jason</option>
+        <option value="Jainil" class="bg-[#171a23]">Jainil</option>
+        <option value="Jacob" class="bg-[#171a23]">Jacob</option>
+        <option value="Charlie" class="bg-[#171a23]">Charlie</option>
+        <option value="Riley" class="bg-[#171a23]">Riley</option>
+        <option value="Sasha" class="bg-[#171a23]">Sasha</option>
+        <option value="Nick" class="bg-[#171a23]">Nick</option>
+        <option value="Rushil" class="bg-[#171a23]">Rushil</option>
+        <option value="Hedley" class="bg-[#171a23]">Hedley</option>
+        <option value="Truby" class="bg-[#171a23]">Truby</option>
+        <option value="Philip" class="bg-[#171a23]">Philip</option>
+        <option value="Ryan" class="bg-[#171a23]">Ryan</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Main Continuous Scrolling Schedule Area -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 mt-6 space-y-10" id="schedule-container">
+  <!-- All 14 Weeks Rendered Continuously -->
+</main>
+
+<!-- Season Standings / Manager Roster Card -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 mt-12">
+  <div class="bg-[#161a24] border border-[#272e42] rounded-2xl p-5 sm:p-6 shadow-lg space-y-4">
+    <div class="flex items-center justify-between border-b border-[#272e42] pb-3">
+      <div>
+        <h3 class="font-espn font-extrabold text-base sm:text-lg text-white uppercase italic">National Friendship League Roster</h3>
+        <p class="text-xs text-gray-400">All 12 teams competing in 2026.</p>
+      </div>
+      <span class="text-xs font-bold px-3 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700">12 TEAMS</span>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+      
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-red-500 to-rose-600 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Jason</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Jainil</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Jacob</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-emerald-400 to-green-500 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Rushil</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Charlie</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Riley</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Hedley</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Nick</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-600 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Sasha</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Truby</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-orange-600 to-red-600 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Philip</div>
+      </div>
+    
+      <div class="bg-[#11131a] border border-[#222736] p-3 rounded-xl hover:border-red-500/50 transition-all text-center space-y-2">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-br from-lime-400 to-emerald-500 mx-auto border border-white/20"></div>
+        <div class="font-espn font-bold text-xs text-white">Ryan</div>
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+<script>
+const scheduleData = [{"week": 1, "name": "Week 1", "phase": "Regular Season Opener", "badge": "WEEK 1", "games": [{"home": "Jacob", "away": "Jason", "badge": "FEATURED RIVALRY"}, {"home": "Jainil", "away": "Ryan", "badge": "RIVALRY MATCHUP"}, {"home": "Hedley", "away": "Nick", "badge": "REGULAR SEASON"}, {"home": "Riley", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Philip", "away": "Truby", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Rushil", "badge": "REGULAR SEASON"}]}, {"week": 2, "name": "Week 2", "phase": "Regular Season", "badge": "WEEK 2", "games": [{"home": "Jainil", "away": "Jason", "badge": "RIVALRY MATCHUP"}, {"home": "Jacob", "away": "Philip", "badge": "FEATURED RIVALRY"}, {"home": "Sasha", "away": "Truby", "badge": "RIVALRY MATCHUP"}, {"home": "Charlie", "away": "Hedley", "badge": "REGULAR SEASON"}, {"home": "Nick", "away": "Riley", "badge": "REGULAR SEASON"}, {"home": "Rushil", "away": "Ryan", "badge": "REGULAR SEASON"}]}, {"week": 3, "name": "Week 3", "phase": "Regular Season", "badge": "WEEK 3", "games": [{"home": "Jainil", "away": "Rushil", "badge": "FEATURED RIVALRY"}, {"home": "Charlie", "away": "Jason", "badge": "RIVALRY MATCHUP"}, {"home": "Hedley", "away": "Riley", "badge": "RIVALRY MATCHUP"}, {"home": "Jacob", "away": "Truby", "badge": "RIVALRY MATCHUP"}, {"home": "Ryan", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Nick", "away": "Philip", "badge": "REGULAR SEASON"}]}, {"week": 4, "name": "Week 4", "phase": "Regular Season", "badge": "WEEK 4", "games": [{"home": "Jason", "away": "Riley", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Jacob", "badge": "REGULAR SEASON"}, {"home": "Hedley", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Jainil", "away": "Nick", "badge": "REGULAR SEASON"}, {"home": "Rushil", "away": "Truby", "badge": "REGULAR SEASON"}, {"home": "Philip", "away": "Ryan", "badge": "REGULAR SEASON"}]}, {"week": 5, "name": "Week 5", "phase": "Regular Season", "badge": "WEEK 5", "games": [{"home": "Jason", "away": "Philip", "badge": "REGULAR SEASON"}, {"home": "Jainil", "away": "Riley", "badge": "REGULAR SEASON"}, {"home": "Jacob", "away": "Rushil", "badge": "REGULAR SEASON"}, {"home": "Nick", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Ryan", "badge": "REGULAR SEASON"}, {"home": "Hedley", "away": "Truby", "badge": "REGULAR SEASON"}]}, {"week": 6, "name": "Week 6", "phase": "Regular Season", "badge": "WEEK 6", "games": [{"home": "Jason", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Riley", "badge": "REGULAR SEASON"}, {"home": "Hedley", "away": "Jacob", "badge": "REGULAR SEASON"}, {"home": "Nick", "away": "Ryan", "badge": "REGULAR SEASON"}, {"home": "Jainil", "away": "Truby", "badge": "REGULAR SEASON"}, {"home": "Philip", "away": "Rushil", "badge": "REGULAR SEASON"}]}, {"week": 7, "name": "Week 7", "phase": "Regular Season", "badge": "WEEK 7", "games": [{"home": "Jason", "away": "Truby", "badge": "REGULAR SEASON"}, {"home": "Philip", "away": "Riley", "badge": "REGULAR SEASON"}, {"home": "Jacob", "away": "Ryan", "badge": "REGULAR SEASON"}, {"home": "Rushil", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Nick", "badge": "REGULAR SEASON"}, {"home": "Hedley", "away": "Jainil", "badge": "REGULAR SEASON"}]}, {"week": 8, "name": "Week 8", "phase": "Regular Season", "badge": "WEEK 8", "games": [{"home": "Jason", "away": "Rushil", "badge": "REGULAR SEASON"}, {"home": "Jacob", "away": "Riley", "badge": "REGULAR SEASON"}, {"home": "Jainil", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Nick", "away": "Truby", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Philip", "badge": "REGULAR SEASON"}, {"home": "Hedley", "away": "Ryan", "badge": "REGULAR SEASON"}]}, {"week": 9, "name": "Week 9", "phase": "Regular Season", "badge": "WEEK 9", "games": [{"home": "Jason", "away": "Nick", "badge": "REGULAR SEASON"}, {"home": "Riley", "away": "Ryan", "badge": "REGULAR SEASON"}, {"home": "Jacob", "away": "Jainil", "badge": "REGULAR SEASON"}, {"home": "Philip", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Hedley", "away": "Rushil", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Truby", "badge": "REGULAR SEASON"}]}, {"week": 10, "name": "Week 10", "phase": "Regular Season", "badge": "WEEK 10", "games": [{"home": "Hedley", "away": "Jason", "badge": "REGULAR SEASON"}, {"home": "Riley", "away": "Rushil", "badge": "REGULAR SEASON"}, {"home": "Jacob", "away": "Nick", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Jainil", "away": "Philip", "badge": "REGULAR SEASON"}, {"home": "Ryan", "away": "Truby", "badge": "REGULAR SEASON"}]}, {"week": 11, "name": "Week 11", "phase": "Regular Season", "badge": "WEEK 11", "games": [{"home": "Jason", "away": "Ryan", "badge": "REGULAR SEASON"}, {"home": "Riley", "away": "Truby", "badge": "REGULAR SEASON"}, {"home": "Jacob", "away": "Sasha", "badge": "REGULAR SEASON"}, {"home": "Nick", "away": "Rushil", "badge": "REGULAR SEASON"}, {"home": "Charlie", "away": "Jainil", "badge": "REGULAR SEASON"}, {"home": "Hedley", "away": "Philip", "badge": "REGULAR SEASON"}]}, {"week": 12, "name": "Week 12", "phase": "Rivalry Rematch", "badge": "WEEK 12", "games": [{"home": "Jacob", "away": "Jason", "badge": "FEATURED REMATCH"}, {"home": "Jainil", "away": "Ryan", "badge": "RIVALRY REMATCH"}, {"home": "Hedley", "away": "Nick", "badge": "REMATCH"}, {"home": "Riley", "away": "Sasha", "badge": "REMATCH"}, {"home": "Philip", "away": "Truby", "badge": "REMATCH"}, {"home": "Charlie", "away": "Rushil", "badge": "REMATCH"}]}, {"week": 13, "name": "Week 13", "phase": "Rivalry Rematch", "badge": "WEEK 13", "games": [{"home": "Jainil", "away": "Jason", "badge": "RIVALRY REMATCH"}, {"home": "Jacob", "away": "Philip", "badge": "FEATURED REMATCH"}, {"home": "Sasha", "away": "Truby", "badge": "RIVALRY REMATCH"}, {"home": "Charlie", "away": "Hedley", "badge": "REMATCH"}, {"home": "Nick", "away": "Riley", "badge": "REMATCH"}, {"home": "Rushil", "away": "Ryan", "badge": "REMATCH"}]}, {"week": 14, "name": "Week 14", "phase": "Regular Season Finale", "badge": "WEEK 14", "games": [{"home": "Jainil", "away": "Rushil", "badge": "FEATURED REMATCH"}, {"home": "Charlie", "away": "Jason", "badge": "RIVALRY REMATCH"}, {"home": "Hedley", "away": "Riley", "badge": "RIVALRY REMATCH"}, {"home": "Jacob", "away": "Truby", "badge": "RIVALRY REMATCH"}, {"home": "Ryan", "away": "Sasha", "badge": "REMATCH"}, {"home": "Nick", "away": "Philip", "badge": "REMATCH"}]}];
+const managerAvatars = {"Jason": {"color": "from-red-500 to-rose-600", "sub": "Manager"}, "Jainil": {"color": "from-amber-400 to-orange-500", "sub": "Manager"}, "Jacob": {"color": "from-blue-500 to-indigo-600", "sub": "Manager"}, "Rushil": {"color": "from-emerald-400 to-green-500", "sub": "Manager"}, "Charlie": {"color": "from-purple-500 to-violet-600", "sub": "Manager"}, "Riley": {"color": "from-pink-500 to-rose-500", "sub": "Manager"}, "Hedley": {"color": "from-cyan-400 to-teal-500", "sub": "Manager"}, "Nick": {"color": "from-yellow-400 to-amber-500", "sub": "Manager"}, "Sasha": {"color": "from-fuchsia-500 to-pink-600", "sub": "Manager"}, "Truby": {"color": "from-sky-400 to-blue-500", "sub": "Manager"}, "Philip": {"color": "from-orange-600 to-red-600", "sub": "Manager"}, "Ryan": {"color": "from-lime-400 to-emerald-500", "sub": "Manager"}};
+
+let activeWeek = 1;
+
+// Live Draft Countdown Timer (Sun, Sep 6, 2026 @ 3:00 PM EDT)
+const draftTargetTime = new Date("2026-09-06T15:00:00-04:00").getTime();
+
+function updateDraftCountdown() {
+  const now = new Date().getTime();
+  const diff = draftTargetTime - now;
+
+  if (diff <= 0) {
+    document.getElementById("draft-days").innerText = "00";
+    document.getElementById("draft-hours").innerText = "00";
+    document.getElementById("draft-mins").innerText = "00";
+    document.getElementById("draft-secs").innerText = "00";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById("draft-days").innerText = days.toString().padStart(2, '0');
+  document.getElementById("draft-hours").innerText = hours.toString().padStart(2, '0');
+  document.getElementById("draft-mins").innerText = mins.toString().padStart(2, '0');
+  document.getElementById("draft-secs").innerText = secs.toString().padStart(2, '0');
+}
+
+setInterval(updateDraftCountdown, 1000);
+updateDraftCountdown();
+
+function scrollToWeek(wkNum) {
+  const el = document.getElementById(`week-${wkNum}`);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+    setActiveTab(wkNum);
+  }
+}
+
+function setActiveTab(wkNum) {
+  activeWeek = wkNum;
+  document.querySelectorAll('.week-tab-btn').forEach(btn => {
+    const num = parseInt(btn.getAttribute('data-week'));
+    if (num === wkNum) {
+      btn.className = 'week-tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-espn transition-all flex items-center space-x-1 border whitespace-nowrap bg-red-600 text-white font-black shadow-lg scale-105 border-red-500 shrink-0';
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    } else {
+      btn.className = 'week-tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-espn transition-all flex items-center space-x-1 border whitespace-nowrap bg-[#11131a] text-gray-400 hover:text-white border-[#1e2330] shrink-0';
+    }
+  });
+}
+
+function renderWeekTabs() {
+  const container = document.getElementById('week-tabs');
+  container.innerHTML = scheduleData.map(wk => {
+    const isActive = wk.week === activeWeek;
+    const btnClass = isActive 
+      ? 'bg-red-600 text-white font-black shadow-lg scale-105 border-red-500' 
+      : 'bg-[#11131a] text-gray-400 hover:text-white border-[#1e2330]';
+
+    return `
+      <button onclick="scrollToWeek(${wk.week})" data-week="${wk.week}" class="week-tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-espn transition-all flex items-center space-x-1 border whitespace-nowrap shrink-0 ${btnClass}">
+        <span>WK ${wk.week}</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function renderSchedule() {
+  const filterMgr = document.getElementById('manager-filter').value;
+  const container = document.getElementById('schedule-container');
+
+  container.innerHTML = scheduleData.map(wkData => {
+    const filteredGames = filterMgr === 'ALL'
+      ? wkData.games
+      : wkData.games.filter(g => g.home === filterMgr || g.away === filterMgr);
+
+    return `
+      <section id="week-${wkData.week}" class="week-section space-y-4">
+        <!-- Week Header -->
+        <div class="bg-[#161a24] border border-[#272e42] rounded-2xl p-4 sm:p-5 shadow-lg flex items-center justify-between">
+          <div>
+            <div class="flex items-center space-x-2 mb-1">
+              <span class="font-espn font-extrabold text-[10px] sm:text-xs uppercase tracking-wider text-red-500 bg-red-500/10 px-2.5 py-0.5 rounded-full border border-red-500/20">
+                ${wkData.phase}
+              </span>
+            </div>
+            <h2 class="text-lg sm:text-2xl font-espn font-black text-white italic">
+              ${wkData.name} Matchups
+            </h2>
+          </div>
+          <span class="text-xs font-espn text-gray-500 font-bold uppercase tracking-wider">WEEK ${wkData.week}</span>
+        </div>
+
+        <!-- Matchups Grid -->
+        ${filteredGames.length === 0 ? `
+          <div class="bg-[#141720] border border-[#262c3e] p-6 rounded-2xl text-center space-y-1">
+            <div class="text-gray-400 font-espn text-xs">No matchup for <span class="text-white font-bold">${filterMgr}</span> in Week ${wkData.week}.</div>
+          </div>
+        ` : `
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+            ${filteredGames.map(g => {
+              const homeInfo = managerAvatars[g.home] || {color: 'from-gray-600 to-gray-800'};
+              const awayInfo = managerAvatars[g.away] || {color: 'from-gray-600 to-gray-800'};
+              const isHighlight = filterMgr !== 'ALL' && (g.home === filterMgr || g.away === filterMgr);
+
+              const cardBorder = isHighlight 
+                ? 'border-red-500 ring-2 ring-red-500/30 bg-[#1b202e]' 
+                : 'border-[#262c3e] bg-[#141720] hover:border-[#38425d]';
+
+              return `
+                <div class="border rounded-2xl p-3.5 sm:p-4 shadow-md transition-all space-y-3 relative overflow-hidden ${cardBorder}">
+                  <!-- Top Matchup Badge -->
+                  <div class="flex items-center justify-between border-b border-[#222736] pb-2">
+                    <span class="text-[10px] font-espn font-bold tracking-wider uppercase text-gray-400">${g.badge}</span>
+                    <span class="text-[9px] font-espn px-2 py-0.5 rounded-full bg-[#1b202d] text-gray-300 font-semibold border border-[#2c354a]">MATCHUP</span>
+                  </div>
+
+                  <!-- Teams Scoreboard Layout -->
+                  <div class="space-y-2 py-0.5">
+                    <!-- Home Team -->
+                    <div class="flex items-center justify-between bg-[#101219] p-2.5 rounded-xl border border-[#1e2332]">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 rounded-full bg-gradient-to-br ${homeInfo.color} border border-white/20 shrink-0"></div>
+                        <div class="font-espn font-bold text-xs sm:text-sm text-white">${g.home}</div>
+                      </div>
+                      <div class="text-[10px] font-espn font-bold text-gray-500 uppercase">HOME</div>
+                    </div>
+
+                    <!-- Away Team -->
+                    <div class="flex items-center justify-between bg-[#101219] p-2.5 rounded-xl border border-[#1e2332]">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 rounded-full bg-gradient-to-br ${awayInfo.color} border border-white/20 shrink-0"></div>
+                        <div class="font-espn font-bold text-xs sm:text-sm text-white">${g.away}</div>
+                      </div>
+                      <div class="text-[10px] font-espn font-bold text-gray-500 uppercase">AWAY</div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `}
+      </section>
+    `;
+  }).join('');
+}
+
+function setupScrollObserver() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const wkNum = parseInt(entry.target.id.replace('week-', ''));
+        if (wkNum) setActiveTab(wkNum);
+      }
+    });
+  }, {
+    rootMargin: '-20% 0px -60% 0px'
+  });
+
+  scheduleData.forEach(wk => {
+    const el = document.getElementById(`week-${wk.week}`);
+    if (el) observer.observe(el);
+  });
+}
+
+renderWeekTabs();
+renderSchedule();
+setTimeout(setupScrollObserver, 100);
+</script>
+
+</body>
+</html>
